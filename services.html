@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Dịch vụ - Hair Harmony</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER (nhúng như đã làm ở homepage) -->
+     <header class="header">
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <span class="logo-icon">
+                <!-- Có thể thay thế bằng SVG hoặc icon salon -->
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <ellipse cx="11" cy="11" rx="10" ry="7" fill="#B0D4B8"/>
+                    <ellipse cx="11" cy="10" rx="7" ry="3.5" fill="#fff"/>
+                </svg>
+            </span>
+            
+        </a>
+          <!-- SEARCH BAR START -->
+        <form class="search-bar" action="/search" method="get">
+            <input type="text" name="q" placeholder="Tìm dịch vụ, stylist..." required>
+            <button type="submit"><span>&#128269;</span></button>
+        </form>
+        <div class="nav-menu">
+            <a href="/">Trang chủ</a>
+            <a href="services.html">Dịch vụ</a>
+            <a href="/stylists">Stylists</a>
+            <a href="/booking">Đặt lịch</a>
+            <a href="/contact">Liên hệ</a>
+                                    <a href="/contact">Hỗ trợ</a>
+
+            <button class="nav-cta" onclick="window.location.href='/login'">Đăng nhập</button>
+        </div>
+    </nav>
+</header>
+
+    <main>
+        <section class="services-hero">
+            <h1>Dịch vụ của Hair Harmony</h1>
+            <p>Đa dạng lựa chọn từ cắt, uốn, nhuộm đến chăm sóc chuyên sâu – <br>
+            Đảm bảo đáp ứng mọi nhu cầu về mái tóc của bạn!</p>
+        </section>
+
+        <section class="services-list-section">
+            <div class="service-list-grid">
+                <!-- CARD 1 -->
+                <div class="service-card service-featured">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80" alt="Cắt tạo kiểu">
+                    <div class="service-info">
+                        <h3>Cắt tạo kiểu</h3>
+                        <div class="service-price">Từ 100.000đ</div>
+                        <p>Chuyên gia tư vấn và tạo kiểu phù hợp với khuôn mặt, phong cách từng khách hàng.</p>
+                        <div class="service-btn-group">
+                            <a href="/booking" class="service-btn btn-booking">Đặt lịch</a>
+                            <a href="/services-detail" class="service-btn btn-more">Xem thêm</a>
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- CARD 2 -->
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Uốn tóc">
+                    <div class="service-info">
+                        <h3>Uốn/duỗi/ép</h3>
+                        <div class="service-price">Từ 250.000đ</div>
+                        <p>Mái tóc bồng bềnh, mềm mại tự nhiên, quy trình chuẩn salon quốc tế.</p>
+                        <div class="service-btn-group">
+                            <a href="/booking" class="service-btn btn-booking">Đặt lịch</a>
+                            <a href="/services-detail" class="service-btn btn-more">Xem thêm</a>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- CARD 3 -->
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1513267048335-8b684205effc?auto=format&fit=crop&w=400&q=80" alt="Nhuộm tóc">
+                    <div class="service-info">
+                        <h3>Nhuộm thời trang</h3>
+                        <div class="service-price">Từ 400.000đ</div>
+                        <p>Bảng màu thời thượng, giữ màu lâu, bảo vệ tóc tối đa bằng sản phẩm cao cấp.</p>
+                        <div class="service-btn-group">
+    <a href="/booking" class="service-btn btn-booking">Đặt lịch</a>
+    <a href="/services-detail" class="service-btn btn-more">Xem thêm</a>
+</div>
+
+                    </div>
+                </div>
+                <!-- CARD 4 -->
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Chăm sóc phục hồi">
+                    <div class="service-info">
+                        <h3>Chăm sóc phục hồi</h3>
+                        <div class="service-price">Từ 180.000đ</div>
+                        <p>Hấp dầu, phục hồi collagen, dưỡng chất dành riêng cho tóc yếu, tóc hư tổn.</p>
+                    <div class="service-btn-group">
+    <a href="/booking" class="service-btn btn-booking">Đặt lịch</a>
+    <a href="/services-detail" class="service-btn btn-more">Xem thêm</a>
+</div>
+
+                    </div>
+                </div>
+                <!-- CARD 5 -->
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1515442261605-cd4ce40c77c9?auto=format&fit=crop&w=400&q=80" alt="Gội đầu massage">
+                    <div class="service-info">
+                        <h3>Gội đầu massage</h3>
+                        <div class="service-price">Từ 60.000đ</div>
+                        <p>Thư giãn, sạch sâu da đầu, liệu trình chuyên biệt với tinh dầu thiên nhiên.</p>
+                       <div class="service-btn-group">
+    <a href="/booking" class="service-btn btn-booking">Đặt lịch</a>
+    <a href="/services-detail" class="service-btn btn-more">Xem thêm</a>
+</div>
+
+                    </div>
+                </div>
+                <!-- CARD 6 -->
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Cắt tóc trẻ em">
+                    <div class="service-info">
+                        <h3>Cắt tóc trẻ em</h3>
+                        <div class="service-price">Từ 80.000đ</div>
+                        <p>Không gian vui nhộn, an toàn, stylist nhẹ nhàng, chuyên nghiệp cho bé.</p>
+                       <div class="service-btn-group">
+    <a href="/booking" class="service-btn btn-booking">Đặt lịch</a>
+    <a href="/services-detail" class="service-btn btn-more">Xem thêm</a>
+</div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER (nhúng như homepage) -->
+    <footer class="footer">
+    <div class="footer-wrapper">
+        <div class="footer-brand">
+            <span class="footer-logo">
+                <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                    <ellipse cx="17" cy="17" rx="16" ry="11" fill="#B0D4B8"/>
+                    <ellipse cx="17" cy="15.5" rx="11" ry="5.5" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="footer-title">Hair Harmony</span>
+            <div class="footer-slogan">Khơi nguồn vẻ đẹp – Thăng hoa tự tin</div>
+        </div>
+        <div class="footer-cols">
+            <div class="footer-col">
+                <h4>Dịch vụ</h4>
+                <a href="/services">Tất cả dịch vụ</a>
+                <a href="/booking">Đặt lịch nhanh</a>
+                <a href="/stylists">Stylist nổi bật</a>
+            </div>
+            <div class="footer-col">
+                <h4>Kết nối</h4>
+                <a href="tel:0987654321">Hotline: 0987 654 321</a>
+                <a href="mailto:hairsalon@email.com">Email: hairsalon@email.com</a>
+                <a href="/contact">Liên hệ - Địa chỉ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Mạng xã hội</h4>
+                <div class="footer-socials">
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            © 2025 Hair Harmony &nbsp;|&nbsp; Designed by You
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

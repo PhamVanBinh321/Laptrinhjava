@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang cá nhân - Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {background: #EAE7D6;}
+    .profile-wrap {max-width: 950px; margin: 38px auto; background: #fff; border-radius: 18px; box-shadow: 0 2px 18px #5d7b6f1b; padding: 32px 32px 30px 32px;}
+    .profile-header {display:flex;align-items:center;gap:24px;margin-bottom: 30px;}
+    .profile-avatar {width: 90px;height:90px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px #b0d4b839;}
+    .profile-info {flex:1;}
+    .profile-name {font-size:1.4rem;color:#5D7B6F;font-weight:700;}
+    .profile-points {color:#A4C3A2;font-weight:600;}
+    .nav-tabs .nav-link.active {background:#B0D4B8;color:#fff;font-weight:600;}
+    .tab-pane {padding-top:18px;}
+    .table th, .table td {vertical-align:middle;}
+    .status-booked {color:#fff;background:#5D7B6F;padding:3px 10px;border-radius:10px;}
+    .status-done {color:#fff;background:#A4C3A2;padding:3px 10px;border-radius:10px;}
+    .status-cancel {color:#fff;background:#bb5555;padding:3px 10px;border-radius:10px;}
+    .btn-profile {background:#5D7B6F;color:#fff;}
+    .btn-profile:hover {background:#A4C3A2;}
+    @media (max-width:700px) {.profile-wrap{padding:8px;}}
+  </style>
+</head>
+<body>
+<div class="profile-wrap">
+  <div class="profile-header">
+    <img src="https://i.pravatar.cc/120?img=42" class="profile-avatar" alt="avatar"/>
+    <div class="profile-info">
+      <div class="profile-name" id="cusName">Trần Thu Hà</div>
+      <div><i class="fa-solid fa-envelope"></i> <span id="cusEmail">hathutrann@example.com</span></div>
+      <div><i class="fa-solid fa-phone"></i> <span id="cusPhone">0912 345 678</span></div>
+      <div class="profile-points mt-1"><i class="fa-solid fa-gift"></i> Điểm thưởng: <span id="cusPoints">250</span> điểm</div>
+    </div>
+    <div>
+      <button class="btn btn-profile btn-sm" onclick="editProfile()"><i class="fa fa-edit"></i> Sửa thông tin</button>
+      <button class="btn btn-secondary btn-sm ms-2" onclick="logout()"><i class="fa fa-sign-out"></i> Đăng xuất</button>
+    </div>
+  </div>
+  <!-- Tabs -->
+  <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings" type="button" role="tab">Lịch đặt của tôi</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="feedbacks-tab" data-bs-toggle="tab" data-bs-target="#feedbacks" type="button" role="tab">Đánh giá của tôi</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="support-tab" data-bs-toggle="tab" data-bs-target="#support" type="button" role="tab">Hỗ trợ đã gửi</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" type="button" role="tab">Cài đặt</button>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <!-- Lịch sử đặt lịch -->
+    <div class="tab-pane fade show active" id="bookings" role="tabpanel">
+      <h5 class="mt-2 mb-2" style="color:#5D7B6F;">Lịch sử đặt lịch</h5>
+      <table class="table table-bordered table-hover align-middle">
+        <thead>
+          <tr style="background:#B0D4B8;color:#fff;">
+            <th>Ngày</th><th>Stylist</th><th>Dịch vụ</th><th>Giá</th><th>Trạng thái</th><th>Đánh giá</th>
+          </tr>
+        </thead>
+        <tbody id="bookingTable">
+          <!-- Dữ liệu sẽ load động -->
+        </tbody>
+      </table>
+    </div>
+    <!-- Feedback của tôi -->
+    <div class="tab-pane fade" id="feedbacks" role="tabpanel">
+      <h5 class="mt-2 mb-2" style="color:#5D7B6F;">Đánh giá bạn đã gửi</h5>
+      <ul class="list-group" id="feedbackList"></ul>
+    </div>
+    <!-- Hỗ trợ đã gửi -->
+    <div class="tab-pane fade" id="support" role="tabpanel">
+      <h5 class="mt-2 mb-2" style="color:#5D7B6F;">Yêu cầu hỗ trợ đã gửi</h5>
+      <ul class="list-group" id="supportList"></ul>
+    </div>
+    <!-- Cài đặt -->
+    <div class="tab-pane fade" id="settings" role="tabpanel">
+      <h5 class="mt-2 mb-2" style="color:#5D7B6F;">Cài đặt tài khoản</h5>
+      <button class="btn btn-danger btn-sm" onclick="alert('Tính năng đang phát triển')"><i class="fa fa-lock"></i> Đổi mật khẩu</button>
+      <span class="ms-2 text-secondary">Hoặc liên hệ hỗ trợ để được giúp đổi email, số điện thoại.</span>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// DEMO data (FE only, khi nối backend sẽ load thật)
+const bookings = [
+  {date:"23/07/2025", stylist:"Ngọc Hà", service:"Cắt tạo kiểu", price: "120.000đ", status:"done", feedback:true},
+  {date:"19/07/2025", stylist:"Minh Hùng", service:"Uốn + Gội", price: "340.000đ", status:"done", feedback:false},
+  {date:"30/07/2025", stylist:"Lan Chi", service:"Nhuộm thời trang", price: "420.000đ", status:"booked", feedback:false},
+  {date:"12/07/2025", stylist:"Quang Anh", service:"Cắt nam", price: "100.000đ", status:"cancel", feedback:false}
+];
+const feedbacks = [
+  {date:"23/07/2025", service:"Cắt tạo kiểu", rating:5, comment:"Stylist rất chuyên nghiệp, tư vấn kiểu hợp!", reply:"Cảm ơn bạn đã ủng hộ."}
+];
+const supports = [
+  {date:"21/07/2025", title:"Không nhận được mã xác nhận OTP", status:"Đã trả lời", answer:"Đã gửi lại mã cho bạn."}
+];
+
+// Hiển thị booking
+function renderBookings(){
+  let html = '';
+  bookings.forEach(b=>{
+    html += `<tr>
+      <td>${b.date}</td>
+      <td>${b.stylist}</td>
+      <td>${b.service}</td>
+      <td>${b.price}</td>
+      <td>
+        ${b.status=="done"?'<span class="status-done">Đã hoàn thành</span>':
+          b.status=="booked"?'<span class="status-booked">Đã đặt</span>':
+          '<span class="status-cancel">Đã hủy</span>'}
+      </td>
+      <td>
+        ${b.status=="done"
+          ? (b.feedback?'<span style="color:#A4C3A2;"><i class="fa fa-check-circle"></i> Đã đánh giá</span>'
+             : `<button class="btn btn-sm btn-profile" onclick="alert('Hiện popup đánh giá')">Đánh giá</button>`)
+          : '<span class="text-muted">-</span>'}
+      </td>
+    </tr>`;
+  });
+  document.getElementById('bookingTable').innerHTML = html;
+}
+// Hiển thị feedback
+function renderFeedbacks(){
+  let html = '';
+  feedbacks.forEach(f=>{
+    html += `<li class="list-group-item">
+      <b>${f.service}</b> (${f.date})<br>
+      <span>${renderStars(f.rating)}</span>
+      <span class="ms-2">${escapeHTML(f.comment)}</span>
+      ${f.reply?`<div class="mt-1 text-success"><i class="fa fa-reply"></i> Salon: ${escapeHTML(f.reply)}</div>`:""}
+    </li>`;
+  });
+  document.getElementById('feedbackList').innerHTML = html || `<li class="list-group-item text-muted">Chưa có đánh giá nào</li>`;
+}
+// Hiển thị hỗ trợ đã gửi
+function renderSupports(){
+  let html = '';
+  supports.forEach(s=>{
+    html += `<li class="list-group-item">
+      <b>${s.title}</b> (${s.date}) <span class="badge bg-${s.status=="Đã trả lời"?"success":"secondary"}">${s.status}</span>
+      ${s.answer?`<div class="mt-1 text-success"><i class="fa fa-reply"></i> Trả lời: ${escapeHTML(s.answer)}</div>`:""}
+    </li>`;
+  });
+  document.getElementById('supportList').innerHTML = html || `<li class="list-group-item text-muted">Chưa có yêu cầu hỗ trợ nào</li>`;
+}
+function renderStars(n){
+  let s = '';
+  for(let i=1;i<=5;i++)
+    s += `<i class="fa-star ${i<=n?'fa-solid checked':'fa-regular'}" style="color:${i<=n?'#F9B801':'#B0D4B8'}"></i>`;
+  return s;
+}
+function escapeHTML(str){return str.replace(/[<>&'"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','\'':'&#39;','"':'&quot;'}[c];});}
+renderBookings();renderFeedbacks();renderSupports();
+// Sửa thông tin (demo)
+function editProfile(){alert('Tính năng sửa thông tin đang phát triển');}
+function logout(){alert('Đã đăng xuất!');window.location='login.html';}
+</script>
+</body>
+</html>

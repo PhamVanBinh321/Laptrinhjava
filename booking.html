@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt lịch - Hair Harmony</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/style.css">
+     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+    <style>
+         #calendar-container {
+      max-width: 750px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #5d7b6f18;
+      padding: 24px 10px;
+    }
+    .fc-toolbar-title { color: #5D7B6F; }
+    .fc-event {
+      background: #B0D4B8;
+      color: #5D7B6F;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+    }
+        .booking-section {
+            background: #EAE7D6;
+            min-height: 100vh;
+            padding: 36px 0 46px 0;
+        }
+        .booking-container {
+            max-width: 700px;
+            background: #fff;
+            margin: 0 auto;
+            border-radius: 20px;
+            box-shadow: 0 2px 16px #5d7b6f20;
+            padding: 32px 28px 24px 28px;
+        }
+        .booking-container h2 {
+            color: #5D7B6F;
+            margin-bottom: 24px;
+            font-size: 2rem;
+        }
+        .booking-step {
+            margin-bottom: 28px;
+        }
+        .booking-step label {
+            display: block;
+            font-weight: 600;
+            color: #5D7B6F;
+            margin-bottom: 7px;
+            margin-top: 8px;
+        }
+        .booking-input, .booking-select, .booking-service-list input[type="checkbox"] {
+            font-size: 1.08rem;
+            padding: 8px 14px;
+            border: 1px solid #B0D4B8;
+            border-radius: 10px;
+            margin-bottom: 7px;
+            background: #F7FDFD;
+            color: #5D7B6F;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .booking-select {
+            cursor: pointer;
+        }
+        .booking-service-list {
+            margin-bottom: 8px;
+        }
+        .booking-service-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 0;
+            border-bottom: 1px solid #EAE7D6;
+            font-size: 1.06rem;
+        }
+        .booking-service-item:last-child {
+            border-bottom: none;
+        }
+        .booking-service-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .booking-service-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        .booking-service-price {
+            color: #A4C3A2;
+            font-weight: 700;
+        }
+        .booking-service-duration {
+            font-size: 0.98rem;
+            color: #B0D4B8;
+        }
+        .booking-summary {
+            background: #D7F9FA;
+            border-radius: 12px;
+            padding: 15px 18px;
+            margin: 15px 0 18px 0;
+            color: #5D7B6F;
+            font-size: 1.1rem;
+        }
+        .booking-methods {
+            display: flex;
+            gap: 18px;
+            margin: 10px 0;
+        }
+        .booking-methods label {
+            font-weight: 500;
+            color: #5D7B6F;
+            margin: 0;
+            font-size: 1rem;
+        }
+        .booking-methods input[type="radio"] {
+            margin-right: 6px;
+        }
+        .booking-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            background: #5D7B6F;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.15rem;
+            border: none;
+            border-radius: 12px;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: background 0.17s;
+        }
+        .booking-btn:hover {
+            background: #A4C3A2;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .booking-container {
+                padding: 16px 5vw 10vw 5vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <!-- ...header code... -->
+    </header>
+    <main>
+        <section class="booking-section">
+            <form class="booking-container" id="bookingForm">
+                <h2>Đặt lịch làm tóc</h2>
+
+                <!-- Step 2: Chọn stylist -->
+                <div class="booking-step">
+                    <label for="booking-stylist">Chọn stylist:</label>
+                    <select class="booking-select" id="booking-stylist" name="stylist" required>
+                        <option value="">-- Chọn stylist --</option>
+                        <option value="1">Ngọc Hà (15 năm) - Cắt, Nhuộm</option>
+                        <option value="2">Minh Hùng (12 năm) - Uốn, Phục hồi</option>
+                        <option value="3">Lan Chi (10 năm) - Dự tiệc, Phục hồi</option>
+                        <option value="4">Quang Anh (8 năm) - Tóc nam, Fade</option>
+                    </select>
+                </div>
+                  <!-- Calendar sẽ hiện sau khi chọn stylist -->
+      <div id="calendar-container" style="display:none;">
+        <div id="calendar"></div>
+      </div>
+                <!-- Step 1: Chọn ngày giờ -->
+                <div class="booking-step">
+                    <label for="booking-datetime">Chọn ngày giờ:</label>
+                    <input type="datetime-local" class="booking-input" id="booking-datetime" name="datetime" required>
+                </div>
+
+
+                <!-- Step 3: Chọn dịch vụ -->
+                <div class="booking-step">
+                    <label>Dịch vụ muốn sử dụng:</label>
+                    <div class="booking-service-list" id="bookingServiceList">
+                        <!-- Mỗi dịch vụ -->
+                        <div class="booking-service-item">
+                            <span class="booking-service-info">
+                                <input type="checkbox" value="cat" data-price="100000" data-duration="30">
+                                Cắt tạo kiểu
+                                <span class="booking-service-duration">(30 phút)</span>
+                            </span>
+                            <span class="booking-service-price">100.000đ</span>
+                        </div>
+                        <div class="booking-service-item">
+                            <span class="booking-service-info">
+                                <input type="checkbox" value="uonnhuom" data-price="300000" data-duration="60">
+                                Uốn/Nhuộm/Ép
+                                <span class="booking-service-duration">(60 phút)</span>
+                            </span>
+                            <span class="booking-service-price">300.000đ</span>
+                        </div>
+                        <div class="booking-service-item">
+                            <span class="booking-service-info">
+                                <input type="checkbox" value="phuchoi" data-price="180000" data-duration="40">
+                                Chăm sóc phục hồi
+                                <span class="booking-service-duration">(40 phút)</span>
+                            </span>
+                            <span class="booking-service-price">180.000đ</span>
+                        </div>
+                        <div class="booking-service-item">
+                            <span class="booking-service-info">
+                                <input type="checkbox" value="goi" data-price="60000" data-duration="20">
+                                Gội đầu massage
+                                <span class="booking-service-duration">(20 phút)</span>
+                            </span>
+                            <span class="booking-service-price">60.000đ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tổng tiền và tổng thời gian -->
+                <div class="booking-summary" id="bookingSummary">
+                    Tổng tiền: 0đ <br>
+                    Tổng thời gian dự kiến: 0 phút
+                </div>
+
+                <!-- Phương thức thanh toán -->
+                <div class="booking-step">
+                    <label>Chọn phương thức thanh toán:</label>
+                    <div class="booking-methods">
+                        <label><input type="radio" name="payment" value="offline" checked> Thanh toán tại salon</label>
+                        <label><input type="radio" name="payment" value="online"> Thanh toán online (sẽ cập nhật)</label>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="booking-btn">Đặt lịch ngay</button>
+            </form>
+        </section>
+    </main>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <!-- ...footer code... -->
+    </footer>
+
+    <script>
+    // JS tự tính tổng tiền, tổng thời gian
+    document.querySelectorAll('.booking-service-list input[type="checkbox"]').forEach(function(chk) {
+        chk.addEventListener('change', updateBookingSummary);
+    });
+    function updateBookingSummary() {
+        let total = 0, totalMin = 0;
+        document.querySelectorAll('.booking-service-list input[type="checkbox"]:checked').forEach(function(chk) {
+            total += parseInt(chk.dataset.price);
+            totalMin += parseInt(chk.dataset.duration);
+        });
+        document.getElementById('bookingSummary').innerHTML = 
+            "Tổng tiền: " + total.toLocaleString() + "đ <br>Tổng thời gian dự kiến: " + totalMin + " phút";
+    }
+    // Gọi hàm lần đầu để reset tổng tiền nếu reload
+    updateBookingSummary();
+
+    // Chặn gửi form thật, chỉ demo (bạn bỏ đoạn này khi nối backend thực sự)
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        // e.preventDefault();
+        // alert('Đặt lịch thành công!');
+    });
+    </script>
+    
+<script>
+let calendar, selectedTime = null;
+
+// Khi chọn stylist, load calendar
+document.getElementById('booking-stylist').addEventListener('change', function() {
+    const stylistId = this.value;
+    if (!stylistId) {
+        document.getElementById('calendar-container').style.display = 'none';
+        document.getElementById('bookingForm').style.display = 'none';
+        return;
+    }
+    document.getElementById('calendar-container').style.display = '';
+    // Ví dụ API trả về event busy: [{start:'2025-07-23T09:00', end:'2025-07-23T10:00', title:'Đã đặt'}]
+    // Ở đây demo cứng, sau này bạn fetch từ backend
+    const events = stylistId=="1"
+        ? [{start:'2025-07-23T09:00', end:'2025-07-23T11:00', title:'Đã đặt'}]
+        : [];
+    if (calendar) calendar.destroy();
+    calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'timeGridWeek',
+        slotMinTime: "08:00:00",
+        slotMaxTime: "20:00:00",
+        selectable: true,
+        locale: 'vi',
+        headerToolbar: { start: 'prev,next today', center: 'title', end: '' },
+        events: events,
+        select: function(info) {
+            // Kiểm tra trùng slot busy, ở đây demo chỉ check event có sẵn
+            let overlap = calendar.getEvents().some(e => {
+                return e.start < info.end && info.start < e.end;
+            });
+            if (overlap) {
+                alert("Khoảng thời gian này đã có người đặt!");
+                return;
+            }
+            selectedTime = info;
+            document.getElementById('bookingForm').style.display = '';
+            // Lưu thông tin slot cho backend hoặc form ẩn
+        }
+    });
+    calendar.render();
+});
+</script>
+</body>
+</html>

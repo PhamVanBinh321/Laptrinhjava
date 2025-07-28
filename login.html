@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập - Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {background: #EAE7D6;}
+    .auth-container {max-width: 400px; margin: 70px auto; background: #fff; border-radius: 18px; box-shadow: 0 2px 14px #5d7b6f1b; padding: 32px 26px;}
+    .auth-title {color: #5D7B6F; font-weight: 700; margin-bottom: 16px;}
+    .form-control:focus {border-color: #B0D4B8; box-shadow: 0 0 2px #A4C3A2;}
+    .btn-auth {background: #5D7B6F; color: #fff; font-weight: 600;}
+    .btn-auth:hover {background: #A4C3A2; color: #fff;}
+    .form-text {color: #A4C3A2;}
+  </style>
+</head>
+<body>
+<div class="auth-container">
+  <h2 class="auth-title">Đăng nhập</h2>
+  <form id="loginForm" autocomplete="off">
+    <div class="mb-3">
+      <label for="login-username" class="form-label">Tên đăng nhập hoặc Email</label>
+      <input type="text" class="form-control" id="login-username" required autofocus>
+    </div>
+    <div class="mb-3">
+      <label for="login-password" class="form-label">Mật khẩu</label>
+      <input type="password" class="form-control" id="login-password" required minlength="6">
+    </div>
+    <div id="login-error" class="alert alert-danger py-2 d-none"></div>
+    <button type="submit" class="btn btn-auth w-100 mt-2">Đăng nhập</button>
+  </form>
+  <div class="mt-3 text-center">
+    <span class="form-text">Chưa có tài khoản?</span>
+    <a href="register.html" class="ms-1" style="color:#5D7B6F;font-weight:600">Đăng ký ngay</a>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="loginSuccess" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered"><div class="modal-content">
+    <div class="modal-body text-center">
+      <div class="mb-2"><span style="font-size:2.5rem;color:#A4C3A2;">&#10004;</span></div>
+      <div>Đăng nhập thành công!</div>
+    </div>
+  </div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// FE validate mock login demo
+document.getElementById('loginForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  const u = document.getElementById('login-username').value.trim();
+  const p = document.getElementById('login-password').value;
+  const err = document.getElementById('login-error');
+  if(!u || !p) {
+    err.textContent = "Vui lòng nhập đầy đủ thông tin!";
+    err.classList.remove('d-none');
+    return;
+  }
+  if(p.length < 6) {
+    err.textContent = "Mật khẩu phải từ 6 ký tự.";
+    err.classList.remove('d-none');
+    return;
+  }
+  // Chỉ demo: tài khoản bất kỳ đều thành công
+  err.classList.add('d-none');
+  let modal = new bootstrap.Modal(document.getElementById('loginSuccess'));
+  modal.show();
+  setTimeout(()=>{ window.location = "index.html"; }, 1300);
+});
+</script>
+</body>
+</html>

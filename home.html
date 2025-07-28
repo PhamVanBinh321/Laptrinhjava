@@ -1,0 +1,155 @@
+
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Hair Harmony</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <span class="logo-icon">
+                <!-- Có thể thay thế bằng SVG hoặc icon salon -->
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <ellipse cx="11" cy="11" rx="10" ry="7" fill="#B0D4B8"/>
+                    <ellipse cx="11" cy="10" rx="7" ry="3.5" fill="#fff"/>
+                </svg>
+            </span>
+        </a>
+                <form class="search-bar" action="/search" method="get">
+            <input type="text" name="q" placeholder="Tìm dịch vụ, stylist..." required>
+            <button type="submit"><span>&#128269;</span></button>
+        </form>
+        <div class="nav-menu">
+            <a href="/">Trang chủ</a>
+            <a href="services.html">Dịch vụ</a>
+            <a href="stylist.html">Stylists</a>
+            <a href="booking.html">Đặt lịch</a>
+            <a href="rate.html">Đánh giá </a>
+            <a href="support.html">Hỗ trợ</a>
+
+            <button class="nav-cta" onclick="window.location.href='profile.html'">Đăng nhập</button>
+        </div>
+    </nav>
+</header>
+  <main>
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Chào mừng đến với <span>Hair Harmony</span></h1>
+                <p>Khám phá trải nghiệm chăm sóc tóc chuyên nghiệp,<br>
+                   đặt lịch dễ dàng cùng những stylist hàng đầu.</p>
+                <a href="/booking" class="hero-cta">Đặt lịch ngay</a>
+            </div>
+            <div class="hero-img">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=520&q=80"
+                     alt="Hair Salon">
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section class="services-section">
+            <h2>Dịch vụ nổi bật</h2>
+            <div class="services-list">
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80" alt="Cắt tóc">
+                    <h3>Cắt tạo kiểu</h3>
+                    <p>Chuyên nghiệp, hợp thời, phù hợp từng khuôn mặt.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="Uốn tóc">
+                    <h3>Uốn/duỗi/nhuộm</h3>
+                    <p>Đội ngũ stylist tay nghề cao, hóa chất cao cấp, lên màu chuẩn, bền đẹp.</p>
+                </div>
+                <div class="service-card">
+                    <img src="https://images.unsplash.com/photo-1513267048335-8b684205effc?auto=format&fit=crop&w=400&q=80" alt="Chăm sóc tóc">
+                    <h3>Chăm sóc tóc</h3>
+                    <p>Phục hồi, hấp dầu, dưỡng chất đặc trị riêng cho mái tóc bạn.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section class="about-section">
+            <div class="about-content">
+                <h2>Vì sao chọn Hair Harmony?</h2>
+                <ul>
+                    <li><b>Đội ngũ stylist giàu kinh nghiệm, tận tâm</b></li>
+                    <li><b>Công nghệ & sản phẩm chất lượng cao</b></li>
+                    <li><b>Đặt lịch online nhanh chóng, nhận nhiều ưu đãi</b></li>
+                </ul>
+                <a href="/services" class="about-cta">Xem thêm dịch vụ</a>
+            </div>
+            <div class="about-img">
+                <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=450&q=80" alt="Salon Hair Harmony">
+            </div>
+        </section>
+
+        <!-- STYLISTS SECTION -->
+        <section class="stylists-section">
+            <h2>Stylist nổi bật</h2>
+            <div class="stylists-list">
+                <div class="stylist-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ngọc Hà">
+                    <h4>Ngọc Hà</h4>
+                    <p>15 năm kinh nghiệm<br>Chuyên tạo kiểu, nhuộm thời trang</p>
+                </div>
+                <div class="stylist-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Minh Hùng">
+                    <h4>Minh Hùng</h4>
+                    <p>12 năm kinh nghiệm<br>Master uốn, phục hồi tóc</p>
+                </div>
+                <div class="stylist-card">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Lan Chi">
+                    <h4>Lan Chi</h4>
+                    <p>10 năm kinh nghiệm<br>Chuyên make-over, tạo kiểu dự tiệc</p>
+                </div>
+            </div>
+        </section>
+    </main>
+<footer class="footer">
+    <div class="footer-wrapper">
+        <div class="footer-brand">
+            <span class="footer-logo">
+                <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                    <ellipse cx="17" cy="17" rx="16" ry="11" fill="#B0D4B8"/>
+                    <ellipse cx="17" cy="15.5" rx="11" ry="5.5" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="footer-title">Hair Harmony</span>
+            <div class="footer-slogan">Khơi nguồn vẻ đẹp – Thăng hoa tự tin</div>
+        </div>
+        <div class="footer-cols">
+            <div class="footer-col">
+                <h4>Dịch vụ</h4>
+                <a href="/services">Tất cả dịch vụ</a>
+                <a href="/booking">Đặt lịch nhanh</a>
+                <a href="/stylists">Stylist nổi bật</a>
+            </div>
+            <div class="footer-col">
+                <h4>Kết nối</h4>
+                <a href="tel:0987654321">Hotline: 0987 654 321</a>
+                <a href="mailto:hairsalon@email.com">Email: hairsalon@email.com</a>
+                <a href="/contact">Liên hệ - Địa chỉ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Mạng xã hội</h4>
+                <div class="footer-socials">
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            © 2025 Hair Harmony &nbsp;|&nbsp; Designed by You
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

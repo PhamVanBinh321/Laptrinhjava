@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Stylist - Hair Harmony</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- HEADER (nhúng như đã làm ở homepage) -->
+  <header class="header">
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <span class="logo-icon">
+                <!-- Có thể thay thế bằng SVG hoặc icon salon -->
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <ellipse cx="11" cy="11" rx="10" ry="7" fill="#B0D4B8"/>
+                    <ellipse cx="11" cy="10" rx="7" ry="3.5" fill="#fff"/>
+                </svg>
+            </span>
+            
+        </a>
+          <!-- SEARCH BAR START -->
+        <form class="search-bar" action="/search" method="get">
+            <input type="text" name="q" placeholder="Tìm dịch vụ, stylist..." required>
+            <button type="submit"><span>&#128269;</span></button>
+        </form>
+        <div class="nav-menu">
+            <a href="/">Trang chủ</a>
+            <a href="services.html">Dịch vụ</a>
+            <a href="/stylists">Stylists</a>
+            <a href="/booking">Đặt lịch</a>
+            <a href="/contact">Liên hệ</a>
+                                    <a href="/contact">Hỗ trợ</a>
+
+            <button class="nav-cta" onclick="window.location.href='/login'">Đăng nhập</button>
+        </div>
+    </nav>
+</header>
+
+    <main>
+        <section class="stylist-hero">
+            <h1>Đội ngũ stylist</h1>
+            <p>Chuyên gia hàng đầu, sáng tạo, tâm huyết với từng kiểu tóc và khách hàng.</p>
+        </section>
+
+        <section class="stylist-list-section">
+            <div class="stylist-list-grid">
+                <!-- CARD 1 -->
+                <div class="stylist-card">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ngọc Hà">
+                    <div class="stylist-info">
+                        <h3>Ngọc Hà</h3>
+                        <div class="stylist-meta">15 năm kinh nghiệm · Cắt & Nhuộm thời trang</div>
+                        <p>Chuyên make-over, tạo kiểu dự tiệc, lên màu cá tính.</p>
+                        <div class="stylist-btn-group">
+                            <a href="/booking?stylist=1" class="stylist-btn btn-booking">Đặt lịch</a>
+                            <a href="detail.html" class="stylist-btn btn-more">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- CARD 2 -->
+                <div class="stylist-card">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Minh Hùng">
+                    <div class="stylist-info">
+                        <h3>Minh Hùng</h3>
+                        <div class="stylist-meta">12 năm kinh nghiệm · Uốn phục hồi tóc</div>
+                        <p>Master uốn – phục hồi, chuyên tóc nam Hàn Quốc.</p>
+                        <div class="stylist-btn-group">
+                            <a href="/booking?stylist=2" class="stylist-btn btn-booking">Đặt lịch</a>
+                            <a href="/stylist/2" class="stylist-btn btn-more">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- CARD 3 -->
+                <div class="stylist-card">
+                    <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Lan Chi">
+                    <div class="stylist-info">
+                        <h3>Lan Chi</h3>
+                        <div class="stylist-meta">10 năm kinh nghiệm · Tạo kiểu dự tiệc</div>
+                        <p>Tư vấn, chăm sóc tóc yếu/hư tổn, tạo kiểu nữ sang trọng.</p>
+                        <div class="stylist-btn-group">
+                            <a href="/booking?stylist=3" class="stylist-btn btn-booking">Đặt lịch</a>
+                            <a href="/stylist/3" class="stylist-btn btn-more">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- CARD 4 -->
+                <div class="stylist-card">
+                    <img src="https://randomuser.me/api/portraits/men/24.jpg" alt="Quang Anh">
+                    <div class="stylist-info">
+                        <h3>Quang Anh</h3>
+                        <div class="stylist-meta">8 năm kinh nghiệm · Cắt, tạo kiểu nam</div>
+                        <p>Chuyên fade, undercut, tạo kiểu nam hiện đại.</p>
+                        <div class="stylist-btn-group">
+                            <a href="/booking?stylist=4" class="stylist-btn btn-booking">Đặt lịch</a>
+                            <a href="/stylist/4" class="stylist-btn btn-more">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   <footer class="footer">
+    <div class="footer-wrapper">
+        <div class="footer-brand">
+            <span class="footer-logo">
+                <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+                    <ellipse cx="17" cy="17" rx="16" ry="11" fill="#B0D4B8"/>
+                    <ellipse cx="17" cy="15.5" rx="11" ry="5.5" fill="#fff"/>
+                </svg>
+            </span>
+            <span class="footer-title">Hair Harmony</span>
+            <div class="footer-slogan">Khơi nguồn vẻ đẹp – Thăng hoa tự tin</div>
+        </div>
+        <div class="footer-cols">
+            <div class="footer-col">
+                <h4>Dịch vụ</h4>
+                <a href="/services">Tất cả dịch vụ</a>
+                <a href="/booking">Đặt lịch nhanh</a>
+                <a href="/stylists">Stylist nổi bật</a>
+            </div>
+            <div class="footer-col">
+                <h4>Kết nối</h4>
+                <a href="tel:0987654321">Hotline: 0987 654 321</a>
+                <a href="mailto:hairsalon@email.com">Email: hairsalon@email.com</a>
+                <a href="/contact">Liên hệ - Địa chỉ</a>
+            </div>
+            <div class="footer-col">
+                <h4>Mạng xã hội</h4>
+                <div class="footer-socials">
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook"></a>
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram"></a>
+                    <a href="#"><img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            © 2025 Hair Harmony &nbsp;|&nbsp; Designed by You
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
