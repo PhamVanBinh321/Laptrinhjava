@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Hair Salon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            display: flex;
+        }
+        #sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
+        }
+        #sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 8px 10px;
+            border-radius: 5px;
+        }
+        #sidebar a:hover, #sidebar .active {
+            background-color: #495057;
+        }
+        #main-content {
+            margin-left: 260px;
+            padding: 2rem;
+            flex-grow: 1;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div id="sidebar">
+    <h4 class="mb-4">🎛️ Quản trị HairSalon</h4>
+    <a href="#" class="active">1. Dashboard</a>
+    <a href="#">2. Quản lý Tài khoản</a>
+    <a href="#">3. Quản lý Đặt lịch</a>
+    <a href="#">4. Quản lý Dịch vụ</a>
+    <a href="#">5. Quản lý Stylist</a>
+    <a href="#">6. Phản hồi & Đánh giá</a>
+    <a href="#">7. Lương & Hoa hồng</a>
+    <a href="#">8. Báo cáo tài chính</a>
+    <a href="#">9. Hỗ trợ & Khiếu nại</a>
+    <a href="#">10. Quản lý nội dung</a>
+    <a href="#">11. Cài đặt hệ thống</a>
+    <a href="#">12. Phân quyền Admin</a>
+    <a href="#">13. Bảo trì hệ thống</a>
+</div>
+
+<!-- Main content -->
+<!-- Main content -->
+<div id="main-content">
+   <div class="card mt-4 shadow-sm">
+  <div class="card-body">
+    <h4 class="card-title mb-4">📬 Trả lời khiếu nại / yêu cầu hỗ trợ</h4>
+
+    <!-- Thông tin người gửi -->
+    <div class="d-flex align-items-center mb-3">
+      <img src="/uploads/avatar/khach1.jpg" class="rounded-circle me-3" width="60">
+      <div>
+        <h5 class="mb-1">Nguyễn Văn A</h5>
+        <small class="text-muted">Gửi lúc: 2025-08-02 13:44</small><br>
+        <span class="badge bg-info mt-1">Loại: booking</span>
+        <span class="badge bg-warning text-dark ms-2">Trạng thái: OPEN</span>
+      </div>
+    </div>
+
+    <!-- Tiêu đề + nội dung -->
+    <div class="mb-3">
+      <h6 class="fw-bold">Tiêu đề:</h6>
+      <p class="mb-2">Stylist không tới đúng giờ</p>
+    </div>
+
+    <div class="mb-3">
+      <h6 class="fw-bold">Nội dung chi tiết:</h6>
+      <div class="bg-light border rounded p-3">
+        Tôi đặt lịch lúc 14h nhưng stylist đến trễ hơn 30 phút. Tôi phải huỷ việc cá nhân để chờ. Mong được hỗ trợ.
+      </div>
+    </div>
+
+    <!-- Ảnh đính kèm (nếu có) -->
+    <div class="mb-4">
+      <h6 class="fw-bold">Ảnh đính kèm:</h6>
+      <a href="/uploads/support/issue1.jpg" target="_blank">
+        <img src="/uploads/support/issue1.jpg" width="150" class="rounded border">
+      </a>
+    </div>
+
+    <!-- Form trả lời -->
+    <form action="#" method="post">
+      <div class="mb-3">
+        <label for="replyText" class="form-label"><strong>Phản hồi từ quản lý:</strong></label>
+        <textarea class="form-control" id="replyText" name="reply" rows="5"
+                  placeholder="Nhập nội dung phản hồi gửi đến khách hàng..."></textarea>
+      </div>
+
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary">📩 Gửi phản hồi</button>
+        <a href="/admin/support" class="btn btn-secondary">⬅ Quay lại danh sách</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+</div>
+
