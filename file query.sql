@@ -105,7 +105,6 @@ INSERT INTO users (username, password, full_name, email, phone, avatar, role, st
 ('khach1',    '123456',     'Nguyễn Văn A',    'nva@gmail.com',        '0912333444', 'khach1.jpg',    'CUSTOMER','ACTIVE',   NOW()),
 ('khach2',    '123456',     'Trần Thị Mai',    'mai@gmail.com',        '0909222333', 'khach2.jpg',    'CUSTOMER','ACTIVE',   NOW());
 
-
 -- Giả sử id của stylist_hoai là 4, stylist_kiet là 5
 INSERT INTO stylist_profile (user_id, experience_years, level, specialties, intro, bio, served_customers, salary, commission_percent)
 VALUES

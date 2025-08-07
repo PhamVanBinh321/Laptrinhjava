@@ -25,7 +25,7 @@ public class Booking {
     @Column(name = "booking_time", nullable = false)
     private LocalDateTime bookingTime;
 
-    @Column(name = "total_amount", precision = 12, scale = 2)
+    @Column(name = "total_amount")
     private Double totalAmount;
 
     @Enumerated(EnumType.STRING)
@@ -138,4 +138,5 @@ public class Booking {
     public void setBookingServices(List<BookingService> bookingServices) {
         this.bookingServices = bookingServices;
     }
+    
 }

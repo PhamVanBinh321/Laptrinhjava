@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - Hair Salon</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { display: flex; }
+        #main-content {
+            margin-left: 260px;
+            padding: 2rem;
+            flex-grow: 1;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+         #sidebar {
+        width: 260px;
+        height: 100vh;
+        position: fixed;
+        background-color: #343a40;
+        color: white;
+        padding: 1rem;
+    }
+    #sidebar a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 8px 10px;
+        border-radius: 5px;
+    }
+    #sidebar a:hover, #sidebar .active {
+        background-color: #495057;
+    }
+    </style>
+</head>
+<body>
+    <!-- Sidebar fragment -->
+    <div th:replace="fragments/sidebar :: sidebar(1)"></div>
+
+    <div id="main-content">
+        <h2>🎯 Dashboard Quản trị hệ thống</h2>
+
+        <!-- Stat Cards -->
+        <div class="row mt-4 g-4">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Lượt đặt lịch</h5>
+                        <p class="card-text fs-4 fw-bold" th:text="${totalBookings}">1,245</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Doanh thu tháng</h5>
+                        <p class="card-text fs-4 fw-bold" th:text="${monthlyRevenue}">35,000,000₫</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Khách hàng mới</h5>
+                        <p class="card-text fs-4 fw-bold" th:text="${newCustomers}">320</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">Stylist hoạt động</h5>
+                        <p class="card-text fs-4 fw-bold" th:text="${activeStylists}">12</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revenue Chart -->
+        <div class="card mt-5 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-4">📊 Doanh thu theo ngày</h5>
+                <canvas id="revenueChart" height="100"></canvas>
+            </div>
+        </div>
+
+        <!-- Top Stylists (dữ liệu thật từ StylistProfile) -->
+        <div class="card mt-5 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title mb-3">💇‍♀️ Stylist nổi bật</h5>
+                <table class="table table-hover table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Họ tên</th>
+                            <th>Level</th>
+                            <th>Số khách phục vụ</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="stylist : ${topStylists}">
+                            <td th:text="${stylist.user.fullName}">Nguyễn Văn A</td>
+                            <td th:text="${stylist.level}">Master</td>
+                            <td th:text="${stylist.servedCustomers}">180</td>
+                            <td>
+                                <span th:text="${stylist.user.status}"
+                                      th:classappend="${stylist.user.status == 'ACTIVE' ? 'badge bg-success' : 'badge bg-danger'}">
+                                    ACTIVE
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Script (dữ liệu thật) -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const labels = /*[[${revenueLabels}]]*/ [];
+        const data = /*[[${revenueData}]]*/ [];
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu (triệu ₫)',
+                    data: data,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    fill: false,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+        /*]]>*/
+    </script>
+</body>
+</html>

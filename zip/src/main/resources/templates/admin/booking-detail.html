@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết đặt lịch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { display: flex; }
+        #main-content { margin-left: 260px; padding: 2rem; flex-grow: 1; background-color: #f8f9fa; min-height: 100vh; }
+        #sidebar {
+            width: 260px;
+            height: 100vh;
+            position: fixed;
+            background-color: #343a40;
+            color: white;
+            padding: 1rem;
+        }
+        #sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 8px 10px;
+            border-radius: 5px;
+        }
+        #sidebar a:hover, #sidebar .active {
+            background-color: #495057;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/sidebar :: sidebar(3)"></div>
+<div id="main-content" style="margin-left:260px;padding:2rem;">
+    <div class="card">
+        <div class="card-body">
+            <h4>Chi tiết đặt lịch #<span th:text="${booking.id}"></span></h4>
+            <p><b>Khách hàng:</b> <span th:text="${booking.customer.fullName}"></span></p>
+            <p><b>Stylist:</b> <span th:text="${booking.stylist.fullName}"></span></p>
+            <p><b>Thời gian:</b> <span th:text="${#temporals.format(booking.bookingTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+            <p><b>Ghi chú:</b> <span th:text="${booking.note}"></span></p>
+            <p><b>Trạng thái:</b> <span th:text="${booking.status}"></span></p>
+            <p><b>Thanh toán:</b> <span th:text="${booking.paymentMethod}"></span></p>
+            <hr>
+           <h5>Dịch vụ:</h5>
+<ul>
+    <li th:each="bs : ${booking.bookingServices}">
+        <span th:text="${bs.service.name}"></span> -
+        <span th:text="${bs.duration}"></span> phút -
+        <span th:text="${#numbers.formatDecimal(bs.price,0,'COMMA',0,'POINT')} + '₫'"></span>
+    </li>
+</ul>
+
+            <hr>
+            <a th:href="@{/admin/bookings}" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lương & Hoa hồng Stylist</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body{display:flex}
+        #main-content{margin-left:260px;padding:2rem;flex-grow:1;background:#f8f9fa}
+        input.form-control-sm{min-width:110px;text-align:end}
+            #sidebar{width:260px;height:100vh;position:fixed;background:#343a40;color:#fff;padding:1rem}
+        #sidebar a{color:#fff;text-decoration:none;display:block;padding:8px 10px;border-radius:5px}
+        #sidebar a:hover,#sidebar .active{background:#495057}
+    </style>
+</head>
+<body>
+
+<!-- sidebar mục 7 -->
+<div th:replace="fragments/sidebar :: sidebar(7)"></div>
+
+<div id="main-content">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="mb-4">💼 Quản lý Lương &amp; Hoa hồng</h4>
+
+            <!-- bộ lọc tháng -->
+            <form class="row g-2 mb-3" th:action="@{/admin/salaries}" method="get">
+                <div class="col-auto">
+                    <input type="month" class="form-control" name="month"
+                           th:value="${month}">
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary">Xem</button>
+                </div>
+            </form>
+
+            <!-- bảng -->
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light text-center">
+                    <tr>
+                        <th>Avatar</th><th>Họ&nbsp;tên</th><th>Level</th>
+                        <th class="text-end">Lương&nbsp;cơ&nbsp;bản</th>
+                        <th class="text-end">Hoa&nbsp;hồng&nbsp;%</th>
+                        <th class="text-end">Doanh&nbsp;thu</th>
+                        <th class="text-end">Hoa&nbsp;hồng</th>
+                        <th class="text-end">Tổng</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <!-- lặp từng stylist -->
+                    <tr th:each="s : ${salaries}">
+                        <!-- ảnh -->
+                        <td class="text-center">
+                            <img th:src="@{|/uploads/avatar/${s.avatar}|}"
+                                 class="rounded-circle" width="45" height="45"
+                                 onerror="this.src='/uploads/avatar/default.png'">
+                        </td>
+
+                        <td th:text="${s.fullName}">Tên</td>
+                        <td><span class="badge bg-info" th:text="${s.level}">Lv</span></td>
+
+                        <!-- ô nhập lương / % -->
+                        <td><input name="baseSalary" type="number" step="0.01"
+                                   class="form-control form-control-sm text-end"
+                                   th:value="${s.baseSalary}"
+                                   th:attr="form='f__' + ${s.stylistId}"></td>
+
+                        <td><input name="percent" type="number" step="0.01" min="0" max="100"
+                                   class="form-control form-control-sm text-end"
+                                   th:value="${s.commissionPercent}"
+                                   th:attr="form='f__' + ${s.stylistId}"></td>
+
+                        <!-- số liệu “thô” -->
+                        <td class="text-end" th:text="${s.revenue}">0</td>
+                        <td class="text-end" th:text="${s.commissionEarned}">0</td>
+                        <td class="text-end" th:text="${s.totalIncome}">0</td>
+
+                        <!-- nút lưu + form “ẩn” -->
+                        <td class="text-center">
+                            <form th:id="'f__' + ${s.stylistId}"
+                                  th:action="@{/admin/salaries/update}" method="post" class="m-0">
+                                <input type="hidden" name="stylistId" th:value="${s.stylistId}">
+                                <input type="hidden" name="redirectMonth" th:value="${month}">
+                                <!-- Nếu dùng Spring Security nhớ chèn token -->
+                                <button class="btn btn-success btn-sm">💾</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <!-- rỗng -->
+                    <tr th:if="${#lists.isEmpty(salaries)}">
+                        <td colspan="9" class="text-center text-muted">Không có dữ liệu.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

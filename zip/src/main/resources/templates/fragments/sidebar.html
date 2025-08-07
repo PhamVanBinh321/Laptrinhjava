@@ -1,0 +1,17 @@
+<!-- fragments/sidebar.html -->
+<div id="sidebar" th:fragment="sidebar(activeMenu)">
+    <h4 class="mb-4">🎛️ Quản trị HairSalon</h4>
+    <a th:classappend="${activeMenu == 1} ? 'active'" th:href="@{/admin/dashboard}">1. Dashboard</a>
+    <a th:classappend="${activeMenu == 2} ? 'active'" th:href="@{/admin/users}">2. Quản lý Tài khoản</a>
+    <a th:classappend="${activeMenu == 3} ? 'active'" th:href="@{/admin/bookings}">3. Quản lý Đặt lịch</a>
+    <a th:classappend="${activeMenu == 4} ? 'active'" th:href="@{/admin/services}">4. Quản lý Dịch vụ</a>
+    <a th:classappend="${activeMenu == 5} ? 'active'" th:href="@{/admin/stylists}">5. Quản lý Stylist</a>
+    <a th:classappend="${activeMenu == 6} ? 'active'" th:href="@{/admin/feedback}">6. Phản hồi & Đánh giá</a>
+    <a th:classappend="${activeMenu == 7} ? 'active'" th:href="@{/admin/salaries}">7. Lương & Hoa hồng</a>
+    <a th:classappend="${activeMenu == 8} ? 'active'" th:href="@{/admin/finance-report}">8. Báo cáo tài chính</a>
+    <a th:classappend="${activeMenu == 9} ? 'active'" th:href="@{/admin/support}">9. Hỗ trợ & Khiếu nại</a>
+    <a th:classappend="${activeMenu == 10} ? 'active'" th:href="@{/admin/content}">10. Quản lý nội dung</a>
+    <a th:classappend="${activeMenu == 11} ? 'active'" th:href="@{/admin/settings}">11. Cài đặt hệ thống</a>
+    <a th:classappend="${activeMenu == 12} ? 'active'" th:href="@{/admin/roles}">12. Phân quyền Admin</a>
+    <a th:classappend="${activeMenu == 13} ? 'active'" th:href="@{/admin/maintenance}">13. Bảo trì hệ thống</a>
+</div>

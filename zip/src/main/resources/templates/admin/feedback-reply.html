@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Trả lời đánh giá</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body{display:flex;}#main-content{margin-left:260px;padding:2rem;flex-grow:1;background:#f8f9fa;min-height:100vh}
+        #sidebar{width:260px;height:100vh;position:fixed;background:#343a40;color:#fff;padding:1rem}
+        #sidebar a{color:#fff;text-decoration:none;display:block;padding:8px 10px;border-radius:5px}
+        #sidebar a:hover,#sidebar .active{background:#495057}
+    </style>
+</head>
+<body>
+<div th:replace="fragments/sidebar :: sidebar(6)"></div>
+
+<div id="main-content">
+    <div class="card mt-4 shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title mb-4">💬 Trả lời đánh giá của khách hàng</h4>
+
+            <!-- Thông tin khách -->
+            <div class="d-flex align-items-center mb-3">
+                <img th:src="@{|/uploads/avatar/${feedback.customer.avatar != null ? feedback.customer.avatar : 'default.png'}|}"
+                     class="rounded-circle me-3" width="60" height="60"/>
+                <div>
+                    <h5 class="mb-1" th:text="${feedback.customer.fullName}">Tên KH</h5>
+                    <small class="text-muted">
+                        Đánh giá lúc:
+                        <span th:text="${#temporals.format(feedback.createdAt,'yyyy-MM-dd HH:mm')}"></span>
+                    </small>
+                </div>
+            </div>
+
+            <!-- Số sao -->
+            <div class="mb-3">
+                <strong>Đánh giá:</strong>
+                <span th:utext="${'⭐'.repeat(feedback.rating)}"
+                      style="font-size:1.2rem;color:#f39c12;"></span>
+            </div>
+
+            <!-- Nội dung đánh giá -->
+            <div class="mb-4">
+                <strong>Nội dung khách gửi:</strong>
+                <div class="p-3 bg-light border rounded mt-1" th:text="${feedback.comment}">...</div>
+            </div>
+
+            <!-- Form phản hồi -->
+            <form th:action="@{|/admin/feedback/reply/${feedback.id}|}" method="post">
+                <div class="mb-3">
+                    <label class="form-label"><strong>Phản hồi từ quản lý:</strong></label>
+                    <textarea class="form-control" name="reply" rows="5"
+                              th:text="${feedback.reply}"></textarea>
+                </div>
+                <button class="btn btn-primary" type="submit">📩 Gửi phản hồi</button>
+                <a th:href="@{/admin/feedback}" class="btn btn-secondary">⬅ Quay lại danh sách</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

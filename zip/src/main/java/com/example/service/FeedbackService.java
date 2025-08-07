@@ -12,4 +12,9 @@ public interface FeedbackService {
     List<Feedback> getByRating(int rating);
     Feedback saveFeedback(Feedback feedback);
     void deleteFeedback(Integer id);
+    List<Feedback> search(String keyword, Integer rating);
+
+    
+    /** Lưu phản hồi của admin cho feedback */
+    void reply(Integer id, String adminReply);
 }

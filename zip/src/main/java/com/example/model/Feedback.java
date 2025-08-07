@@ -24,7 +24,7 @@ public class Feedback {
     @Column(nullable = false)
     private Integer rating; // CHECK (1-5)
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String comment;
 
     @Lob

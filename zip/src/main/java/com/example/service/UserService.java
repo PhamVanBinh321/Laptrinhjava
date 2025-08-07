@@ -15,4 +15,5 @@ public interface UserService {
     void deleteUser(Integer id);
     List<User> getUsersByRole(User.Role role);
     List<User> getUsersByStatus(User.Status status);
+    void updateStatus(Integer userId, User.Status status);
 }

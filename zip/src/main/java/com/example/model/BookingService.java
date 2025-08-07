@@ -28,7 +28,6 @@ public class BookingService {
     @JoinColumn(name = "service_id", insertable = false, updatable = false)
     private Service service;
 
-    @Column(precision = 10, scale = 2)
     private Double price;   // Giá tại thời điểm đặt
 
     private Integer duration; // Thời lượng tại thời điểm đặt

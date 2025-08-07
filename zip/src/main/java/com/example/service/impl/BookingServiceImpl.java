@@ -26,10 +26,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findAll();
     }
 
-    @Override
-    public Optional<Booking> getBookingById(Integer id) {
-        return bookingRepository.findById(id);
-    }
+   
 
     @Override
     public List<Booking> getBookingsByCustomer(User customer) {
@@ -60,4 +57,36 @@ public class BookingServiceImpl implements BookingService {
     public void deleteBooking(Integer id) {
         bookingRepository.deleteById(id);
     }
+    @Override
+public List<Booking> findAllForAdmin(String keyword, String status) {
+    List<Booking> bookings = bookingRepository.findAll(); // Có thể custom query nếu data lớn
+    return bookings.stream().filter(b -> {
+        boolean ok = true;
+        if (keyword != null && !keyword.isEmpty()) {
+            String low = keyword.toLowerCase();
+            ok = ok && (
+                b.getCustomer().getFullName().toLowerCase().contains(low) ||
+                b.getStylist().getFullName().toLowerCase().contains(low) ||
+                b.getStatus().name().toLowerCase().contains(low)
+            );
+        }
+        if (status != null && !status.isEmpty()) {
+            ok = ok && b.getStatus().name().equalsIgnoreCase(status);
+        }
+        return ok;
+    }).toList();
+}
+
+@Override
+public void updateStatus(Integer id, Booking.Status status) {
+    Booking booking = bookingRepository.findById(id).orElseThrow();
+    booking.setStatus(status);
+    bookingRepository.save(booking);
+}
+
+@Override
+public Optional<Booking> getBookingById(Integer id) {
+    return bookingRepository.findById(id);
+}
+
 }

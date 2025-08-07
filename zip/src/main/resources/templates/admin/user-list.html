@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Tài khoản - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { display: flex; }
+        #main-content { margin-left: 260px; padding: 2rem; flex-grow: 1; background-color: #f8f9fa; min-height: 100vh; } #sidebar {
+        width: 260px;
+        height: 100vh;
+        position: fixed;
+        background-color: #343a40;
+        color: white;
+        padding: 1rem;
+    }
+    #sidebar a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 8px 10px;
+        border-radius: 5px;
+    }
+    #sidebar a:hover, #sidebar .active {
+        background-color: #495057;
+    }
+    </style>
+</head>
+<body>
+    <div th:replace="fragments/sidebar :: sidebar(2)"></div>
+    <div id="main-content">
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <div class="card mt-4 shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title mb-3">👤 Quản lý Tài khoản người dùng</h4>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <input type="text" id="searchInput" class="form-control" placeholder="🔍 Tìm theo tên, email, username, số điện thoại...">
+                    </div>
+                </div>
+                <!-- Tab Vai trò -->
+                <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item"><a class="nav-link [[${roleActive}=='ALL'?'active':'']]" th:href="@{/admin/users}">Tất cả</a></li>
+                    <li class="nav-item"><a class="nav-link [[${roleActive}=='CUSTOMER'?'active':'']]" th:href="@{/admin/users(role='CUSTOMER')}">Khách hàng</a></li>
+                    <li class="nav-item"><a class="nav-link [[${roleActive}=='STYLIST'?'active':'']]" th:href="@{/admin/users(role='STYLIST')}">Stylist</a></li>
+                    <li class="nav-item"><a class="nav-link [[${roleActive}=='STAFF'?'active':'']]" th:href="@{/admin/users(role='STAFF')}">Nhân viên</a></li>
+                    <li class="nav-item"><a class="nav-link [[${roleActive}=='MANAGER'?'active':'']]" th:href="@{/admin/users(role='MANAGER')}">Quản lý</a></li>
+                    <li class="nav-item"><a class="nav-link [[${roleActive}=='ADMIN'?'active':'']]" th:href="@{/admin/users(role='ADMIN')}">Admin</a></li>
+                </ul>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle" id="userTable">
+                        <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Avatar</th>
+                            <th>Họ tên</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Vai trò</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td>
+                                <img th:src="${user.avatar != null} ? @{/uploads/avatar/{img}(img=${user.avatar})} : '@{/uploads/avatar/default.png}'" class="rounded-circle" width="50">
+                            </td>
+                            <td th:text="${user.fullName}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.phone}"></td>
+                            <td><span class="badge bg-secondary" th:text="${user.role}"></span></td>
+                            <td>
+                                <span th:text="${user.status}"
+                                      th:classappend="${user.status == 'ACTIVE' ? 'badge bg-success' : 'badge bg-danger'}"></span>
+                            </td>
+                            <td>
+                                <a th:href="@{|/admin/users/edit/${user.id}|}" class="btn btn-sm btn-primary">Sửa</a>
+                                <a th:href="@{|/admin/users/delete/${user.id}|}" class="btn btn-sm btn-danger" onclick="return confirm('Xác nhận xóa tài khoản này?');">Xóa</a>
+                                <a th:href="@{|/admin/users/status/${user.id}|}"
+   th:text="${user.status == 'ACTIVE' ? 'Khóa' : 'Mở'}"
+   th:classappend="'btn btn-sm ' + (user.status == 'ACTIVE' ? 'btn-warning' : 'btn-success')"></a>
+
+                                <a th:href="@{|/admin/users/resetpw/${user.id}|}" class="btn btn-sm btn-secondary" onclick="return confirm('Reset mật khẩu về mặc định?');">Reset</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a th:href="@{/admin/users/new}" class="btn btn-primary mt-4">➕ Tạo tài khoản mới</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            const keyword = this.value.toLowerCase();
+            const rows = document.querySelectorAll('#userTable tbody tr');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(keyword) ? '' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>

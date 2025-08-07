@@ -12,4 +12,5 @@ public interface ServiceService {
     List<Service> getServicesByStatus(Service.Status status);
     Service saveService(Service service);
     void deleteService(Integer id);
+     List<Service> searchServices(String keyword, String status);
 }

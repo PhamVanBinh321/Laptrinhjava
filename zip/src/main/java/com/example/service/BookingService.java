@@ -16,4 +16,7 @@ public interface BookingService {
     List<Booking> getBookingsByTimeRange(LocalDateTime from, LocalDateTime to);
     Booking saveBooking(Booking booking);
     void deleteBooking(Integer id);
+    List<Booking> findAllForAdmin(String keyword, String status);
+void updateStatus(Integer id, Booking.Status status);
+
 }

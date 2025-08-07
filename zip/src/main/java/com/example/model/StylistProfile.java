@@ -34,11 +34,11 @@ public class StylistProfile {
     @Column(name = "served_customers")
     private Integer servedCustomers = 0;
 
-    @Column(precision = 12, scale = 2)
     private Double salary = 0.0;
 
-    @Column(name = "commission_percent", precision = 5, scale = 2)
-    private Double commissionPercent = 10.00;
+@Column(name = "commission_percent")
+private Double commissionPercent = 10.00;
+
 
     // Enum cho level
     public enum Level {

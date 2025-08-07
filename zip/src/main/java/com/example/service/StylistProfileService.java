@@ -9,4 +9,7 @@ public interface StylistProfileService {
     Optional<StylistProfile> getById(Integer userId);
     StylistProfile saveStylistProfile(StylistProfile stylistProfile);
     void deleteStylistProfile(Integer userId);
+       List<StylistProfile> searchStylists(String keyword, String level);
+    Optional<StylistProfile> getByUserId(Integer userId);
+    void saveStylist(StylistProfile stylist);
 }

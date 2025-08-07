@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.model.StylistProfile;
+import com.example.repository.ServiceRepository;
 import com.example.repository.StylistProfileRepository;
 import com.example.service.StylistProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,36 @@ import java.util.Optional;
 @Service
 public class StylistProfileServiceImpl implements StylistProfileService {
 
-    private final StylistProfileRepository stylistProfileRepository;
+
+        private final StylistProfileRepository stylistProfileRepository;
+
+
+    @Override
+    public List<StylistProfile> searchStylists(String keyword, String level) {
+        boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
+        boolean hasLevel = level != null && !level.trim().isEmpty();
+
+        if (hasKeyword && hasLevel) {
+            return stylistProfileRepository.findByUser_FullNameContainingIgnoreCaseAndLevel(
+                    keyword.trim(), StylistProfile.Level.valueOf(level));
+        } else if (hasKeyword) {
+            return stylistProfileRepository.findByUser_FullNameContainingIgnoreCase(keyword.trim());
+        } else if (hasLevel) {
+            return stylistProfileRepository.findByLevel(StylistProfile.Level.valueOf(level));
+        } else {
+            return stylistProfileRepository.findAll();
+        }
+    }
+
+    @Override
+    public Optional<StylistProfile> getByUserId(Integer userId) {
+        return stylistProfileRepository.findByUserId(userId);
+    }
+
+    @Override
+    public void saveStylist(StylistProfile stylist) {
+        stylistProfileRepository.save(stylist);
+    }
 
     @Autowired
     public StylistProfileServiceImpl(StylistProfileRepository stylistProfileRepository) {

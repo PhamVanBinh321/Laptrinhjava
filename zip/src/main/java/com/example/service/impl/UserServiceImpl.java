@@ -11,9 +11,19 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    
     private final UserRepository userRepository;
+   
 
+    @Override
+    public void updateStatus(Integer userId, User.Status status) {
+        Optional<User> optional = userRepository.findById(userId);
+        if (optional.isPresent()) {
+            User user = optional.get();
+            user.setStatus(status);
+            userRepository.save(user);
+        }
+    }
     @Autowired  // Có thể bỏ nếu chỉ có 1 constructor
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;

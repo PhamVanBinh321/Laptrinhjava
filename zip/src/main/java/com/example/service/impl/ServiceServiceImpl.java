@@ -19,6 +19,26 @@ public class ServiceServiceImpl implements ServiceService {
         this.serviceRepository = serviceRepository;
     }
 
+     // Hàm searchServices đúng yêu cầu!
+    @Override
+    public List<Service> searchServices(String keyword, String status) {
+        boolean hasKeyword = keyword != null && !keyword.trim().isEmpty();
+        boolean hasStatus = status != null && !status.trim().isEmpty();
+
+        if (hasKeyword && hasStatus) {
+            return serviceRepository.findByNameContainingIgnoreCaseAndStatus(
+                keyword.trim(),
+                Service.Status.valueOf(status)
+            );
+        } else if (hasKeyword) {
+            return serviceRepository.findByNameContainingIgnoreCase(keyword.trim());
+        } else if (hasStatus) {
+            return serviceRepository.findByStatus(Service.Status.valueOf(status));
+        } else {
+            return serviceRepository.findAll();
+        }
+    }
+    
     @Override
     public List<Service> getAllServices() {
         return serviceRepository.findAll();

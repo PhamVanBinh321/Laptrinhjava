@@ -9,4 +9,5 @@ public interface ServiceRepository extends JpaRepository<Service, Integer> {
     List<Service> findByStatus(Service.Status status);
     List<Service> findByNameContainingIgnoreCase(String keyword);
     // Thêm các hàm filter khi cần
+     List<Service> findByNameContainingIgnoreCaseAndStatus(String keyword, Service.Status status);
 }

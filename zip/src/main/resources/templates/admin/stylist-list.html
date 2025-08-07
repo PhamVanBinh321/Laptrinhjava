@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Stylist - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { display: flex; }
+        #main-content { margin-left: 260px; padding: 2rem; flex-grow: 1; background-color: #f8f9fa; min-height: 100vh; }
+        #sidebar { width: 260px; height: 100vh; position: fixed; background-color: #343a40; color: white; padding: 1rem; }
+        #sidebar a { color: white; text-decoration: none; display: block; padding: 8px 10px; border-radius: 5px; }
+        #sidebar a:hover, #sidebar .active { background-color: #495057; }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/sidebar :: sidebar(5)"></div>
+<div id="main-content">
+    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <div class="card mt-4 shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title mb-3">💇‍♀️ Quản lý Stylist</h4>
+            <!-- Tìm kiếm và filter -->
+            <form class="row mb-3" th:action="@{/admin/stylists}" method="get">
+                <div class="col-md-5">
+                    <input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="🔍 Tìm theo tên, level, chuyên môn...">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" name="level" th:value="${level}" onchange="this.form.submit()">
+                        <option value="">-- Level --</option>
+                        <option value="Junior" th:selected="${level == 'Junior'}">Junior</option>
+                        <option value="Senior" th:selected="${level == 'Senior'}">Senior</option>
+                        <option value="Master" th:selected="${level == 'Master'}">Master</option>
+                    </select>
+                </div>
+                <div class="col-md-3 text-end">
+                    <a th:href="@{/admin/stylists/new}" class="btn btn-primary">➕ Thêm stylist</a>
+                </div>
+            </form>
+            <!-- Bảng stylist -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle" id="stylistTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Họ tên</th>
+                            <th>Level</th>
+                            <th>Chuyên môn</th>
+                            <th>Giới thiệu</th>
+                            <th>Khách đã phục vụ</th>
+                            <th>Lương + Hoa hồng</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="sty : ${stylists}">
+                        <td>
+                            <img th:src="${sty.user.avatar != null} ? @{/uploads/avatar/{img}(img=${sty.user.avatar})} : @{/uploads/avatar/default.png}"
+                                 class="rounded-circle" width="50">
+                        </td>
+                        <td th:text="${sty.user.fullName}"></td>
+                        <td>
+                            <span th:text="${sty.level}" th:classappend="${sty.level == 'Senior'} ? 'badge bg-warning text-dark' : (sty.level == 'Junior' ? 'badge bg-secondary' : 'badge bg-success')"></span>
+                        </td>
+                        <td th:text="${sty.specialties}"></td>
+                        <td th:text="${sty.intro}"></td>
+                        <td th:text="${sty.servedCustomers}"></td>
+                       <td>
+    <span th:text="${#numbers.formatDecimal(sty.salary,0,'COMMA',0,'POINT')}"></span> ₫ + 
+    <span th:text="${#numbers.formatDecimal(sty.commissionPercent,0,'COMMA',0,'POINT')}"></span> %
+</td>
+
+                        <td>
+                            <span class="badge"
+                                th:classappend="${sty.user.status == 'ACTIVE'} ? 'bg-success' : 'bg-danger'"
+                                th:text="${sty.user.status}"></span>
+                        </td>
+                        <td>
+                            <a th:if="${sty.user.status == 'BLOCKED'}" th:href="@{|/admin/stylists/unblock/${sty.user.id}|}" class="btn btn-sm btn-success">Mở khóa</a>
+                            <a th:if="${sty.user.status == 'ACTIVE'}" th:href="@{|/admin/stylists/block/${sty.user.id}|}" class="btn btn-sm btn-danger">Khóa</a>
+                            <a th:href="@{|/admin/stylists/edit/${sty.user.id}|}" class="btn btn-sm btn-info">✎ Sửa</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(stylists)}">
+                        <td colspan="9" class="text-center text-muted">Không có stylist nào.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
