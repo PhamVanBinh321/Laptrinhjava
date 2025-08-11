@@ -25,6 +25,12 @@
         #sidebar a:hover, #sidebar .active {
             background-color: #495057;
         }
+        .avatar-img {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -69,14 +75,22 @@
                     <tr th:each="b : ${bookings}">
                         <td th:text="${b.id}"></td>
                         <td>
-                            <img th:src="${b.customer.avatar != null} ? @{/uploads/avatar/{img}(img=${b.customer.avatar})} : @{/uploads/avatar/default.png}"
-                                 class="rounded-circle me-2" width="40">
-                            <span th:text="${b.customer.fullName}"></span>
+                            <div class="d-flex align-items-center">
+                                <img th:src="${b.customer.avatar != null} ? @{/uploads/avatar/{img}(img=${b.customer.avatar})} : @{/uploads/avatar/default.png}"
+                                     class="avatar-img me-2"
+                                     onerror="this.src='https://placehold.co/40x40?text=No+Image'"
+                                     alt="Customer avatar">
+                                <span th:text="${b.customer.fullName}"></span>
+                            </div>
                         </td>
                         <td>
-                            <img th:src="${b.stylist.avatar != null} ? @{/uploads/avatar/{img}(img=${b.stylist.avatar})} : @{/uploads/avatar/default.png}"
-                                 class="rounded-circle me-2" width="40">
-                            <span th:text="${b.stylist.fullName}"></span>
+                            <div class="d-flex align-items-center">
+                                <img th:src="${b.stylist.avatar != null} ? @{/uploads/avatar/{img}(img=${b.stylist.avatar})} : @{/uploads/avatar/default.png}"
+                                     class="avatar-img me-2"
+                                     onerror="this.src='https://placehold.co/40x40?text=No+Image'"
+                                     alt="Stylist avatar">
+                                <span th:text="${b.stylist.fullName}"></span>
+                            </div>
                         </td>
                         <td th:text="${#temporals.format(b.bookingTime, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="${b.note}"></td>
@@ -95,29 +109,27 @@
                                 </li>
                             </ul>
                         </td>
-                     <td>
-    <!-- Sử dụng hàm trim() để loại bỏ khoảng trắng thừa -->
-    <a th:if="${#strings.trim(b.status) == 'PENDING'}" 
-       th:href="@{|/admin/bookings/confirm/${b.id}|}" 
-       class="btn btn-sm btn-success me-1">✔ Xác nhận</a>
-    
-    <a th:if="${#strings.trim(b.status) == 'PENDING'}" 
-       th:href="@{|/admin/bookings/cancel/${b.id}|}" 
-       class="btn btn-sm btn-danger me-1">✖ Hủy</a>
-    
-    <a th:if="${#strings.trim(b.status) == 'CONFIRMED'}" 
-       th:href="@{|/admin/bookings/done/${b.id}|}" 
-       class="btn btn-sm btn-secondary me-1">Hoàn thành</a>
-    
-    <a th:if="${#strings.trim(b.status) == 'CONFIRMED'}" 
-       th:href="@{|/admin/bookings/noshow/${b.id}|}" 
-       class="btn btn-sm btn-dark me-1">No-Show</a>
-    
-    <a th:href="@{|/admin/bookings/detail/${b.id}|}" 
-       class="btn btn-sm btn-info">Chi tiết</a>
-</td>
-
-
+                        <td>
+                            <!-- Sử dụng hàm trim() để loại bỏ khoảng trắng thừa -->
+                            <a th:if="${#strings.trim(b.status) == 'PENDING'}" 
+                               th:href="@{|/admin/bookings/confirm/${b.id}|}" 
+                               class="btn btn-sm btn-success me-1 mb-1">✔ Xác nhận</a>
+                            
+                            <a th:if="${#strings.trim(b.status) == 'PENDING'}" 
+                               th:href="@{|/admin/bookings/cancel/${b.id}|}" 
+                               class="btn btn-sm btn-danger me-1 mb-1">✖ Hủy</a>
+                            
+                            <a th:if="${#strings.trim(b.status) == 'CONFIRMED'}" 
+                               th:href="@{|/admin/bookings/done/${b.id}|}" 
+                               class="btn btn-sm btn-secondary me-1 mb-1">Hoàn thành</a>
+                            
+                            <a th:if="${#strings.trim(b.status) == 'CONFIRMED'}" 
+                               th:href="@{|/admin/bookings/noshow/${b.id}|}" 
+                               class="btn btn-sm btn-dark me-1 mb-1">No-Show</a>
+                            
+                            <a th:href="@{|/admin/bookings/detail/${b.id}|}" 
+                               class="btn btn-sm btn-info">Chi tiết</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

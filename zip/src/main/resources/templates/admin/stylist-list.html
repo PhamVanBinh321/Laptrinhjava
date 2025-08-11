@@ -76,11 +76,11 @@
                                 th:classappend="${sty.user.status == 'ACTIVE'} ? 'bg-success' : 'bg-danger'"
                                 th:text="${sty.user.status}"></span>
                         </td>
-                        <td>
-                            <a th:if="${sty.user.status == 'BLOCKED'}" th:href="@{|/admin/stylists/unblock/${sty.user.id}|}" class="btn btn-sm btn-success">Mở khóa</a>
-                            <a th:if="${sty.user.status == 'ACTIVE'}" th:href="@{|/admin/stylists/block/${sty.user.id}|}" class="btn btn-sm btn-danger">Khóa</a>
-                            <a th:href="@{|/admin/stylists/edit/${sty.user.id}|}" class="btn btn-sm btn-info">✎ Sửa</a>
-                        </td>
+                       <td>
+    <a th:if="${#strings.trim(sty.user.status) == 'BLOCKED'}" th:href="@{|/admin/stylists/unblock/${sty.user.id}|}" class="btn btn-sm btn-success">Mở khóa</a>
+    <a th:if="${#strings.trim(sty.user.status) == 'ACTIVE'}" th:href="@{|/admin/stylists/block/${sty.user.id}|}" class="btn btn-sm btn-danger">Khóa</a>
+    <a th:href="@{|/admin/stylists/edit/${sty.user.id}|}" class="btn btn-sm btn-info">✎ Sửa</a>
+</td>
                     </tr>
                     <tr th:if="${#lists.isEmpty(stylists)}">
                         <td colspan="9" class="text-center text-muted">Không có stylist nào.</td>

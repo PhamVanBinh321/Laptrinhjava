@@ -76,8 +76,8 @@
                             <label class="form-label">Ảnh đại diện</label>
                             <input type="file" name="avatarFile" class="form-control">
                             <div th:if="${user.avatar != null}">
-                                <img th:src="@{/uploads/avatar/{img}(img=${user.avatar})}" class="rounded mt-2" width="100">
-                            </div>
+    <img th:src="@{/uploads/avatar/{img}(img=${user.avatar})}" class="rounded mt-2" width="100">
+</div>
                         </div>
                     </div>
 

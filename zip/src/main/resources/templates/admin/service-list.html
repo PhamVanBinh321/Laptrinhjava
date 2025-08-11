@@ -13,6 +13,12 @@
         }
         #sidebar a { color: white; text-decoration: none; display: block; padding: 8px 10px; border-radius: 5px; }
         #sidebar a:hover, #sidebar .active { background-color: #495057; }
+        .service-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +64,9 @@
                     <tr th:each="s : ${services}">
                         <td>
                             <img th:src="${s.image != null} ? @{/uploads/services/{img}(img=${s.image})} : @{/uploads/services/default.png}"
-                                 th:alt="${s.name}" width="60">
+                                 th:alt="${s.name}" 
+                                 class="service-img"
+                                 onerror="this.src='https://placehold.co/60x60?text=No+Image'">
                         </td>
                         <td th:text="${s.name}"></td>
                         <td th:text="${s.intro}"></td>
@@ -85,5 +93,8 @@
         </div>
     </div>
 </div>
+<script>
+    // Script tìm kiếm có thể thêm nếu cần
+</script>
 </body>
 </html>
