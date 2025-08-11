@@ -1,34 +1,58 @@
 package com.example.service.impl;
 
-
+import com.example.dto.RegisterRequest;
 import com.example.model.User;
 import com.example.repository.UserRepository;
 import com.example.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    
-    private final UserRepository userRepository;
-   
+
+    private final UserRepository userRepository;   // ✅ thống nhất tên biến
+    private final PasswordEncoder passwordEncoder; // ✅ được tiêm qua constructor của Lombok
 
     @Override
-    public void updateStatus(Integer userId, User.Status status) {
-        Optional<User> optional = userRepository.findById(userId);
-        if (optional.isPresent()) {
-            User user = optional.get();
-            user.setStatus(status);
-            userRepository.save(user);
+    @Transactional
+    public void registerCustomer(RegisterRequest req) {
+        if (!req.getPassword().equals(req.getRePassword())) {
+            throw new IllegalArgumentException("Mật khẩu nhập lại không khớp");
         }
-    }
-    @Autowired  // Có thể bỏ nếu chỉ có 1 constructor
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+        if (userRepository.existsByUsernameIgnoreCase(req.getUsername())) {
+            throw new IllegalArgumentException("Tên đăng nhập đã tồn tại");
+        }
+        if (userRepository.existsByEmailIgnoreCase(req.getEmail())) {
+            throw new IllegalArgumentException("Email đã được dùng");
+        }
+
+        User u = new User();
+        u.setFullName(req.getFullName().trim());
+        u.setEmail(req.getEmail().trim());
+        u.setUsername(req.getUsername().trim());
+        u.setPassword(passwordEncoder.encode(req.getPassword()));
+        u.setRole(User.Role.CUSTOMER);   // enum lồng trong User
+        u.setStatus(User.Status.ACTIVE); // enum lồng trong User
+
+        userRepository.save(u);
     }
 
+    @Override
+    @Transactional
+    public void updateStatus(Integer userId, User.Status status) {
+        userRepository.findById(userId).ifPresent(u -> {
+            u.setStatus(status);
+            userRepository.save(u);
+        });
+    }
+
+    // Các hàm CRUD/tra cứu khác (nếu interface bạn đang có)
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();

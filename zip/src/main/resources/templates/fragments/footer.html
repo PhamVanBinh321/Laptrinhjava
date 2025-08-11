@@ -1,0 +1,49 @@
+<footer class="footer"
+        th:fragment="siteFooter"
+        xmlns:th="http://www.thymeleaf.org">
+  <div class="footer-wrapper">
+    <div class="footer-brand">
+      <span class="footer-logo" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" role="img">
+          <ellipse cx="17" cy="17" rx="16" ry="11" fill="#B0D4B8"></ellipse>
+          <ellipse cx="17" cy="15.5" rx="11" ry="5.5" fill="#fff"></ellipse>
+        </svg>
+      </span>
+      <span class="footer-title">Hair Harmony</span>
+      <div class="footer-slogan">Khơi nguồn vẻ đẹp – Thăng hoa tự tin</div>
+    </div>
+
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Dịch vụ</h4>
+        <a th:href="@{/services}">Tất cả dịch vụ</a>
+        <a th:href="@{/booking}">Đặt lịch nhanh</a>
+        <a th:href="@{/stylists}">Stylist nổi bật</a>
+      </div>
+      <div class="footer-col">
+        <h4>Kết nối</h4>
+        <a href="tel:0987654321">Hotline: 0987 654 321</a>
+        <a href="mailto:hairsalon@email.com">Email: hairsalon@email.com</a>
+        <a th:href="@{/contact}">Liên hệ - Địa chỉ</a>
+      </div>
+      <div class="footer-col">
+        <h4>Mạng xã hội</h4>
+        <div class="footer-socials">
+          <a href="#" aria-label="Facebook">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/facebook.svg" alt="Facebook" width="20" height="20">
+          </a>
+          <a href="#" aria-label="Instagram">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/instagram.svg" alt="Instagram" width="20" height="20">
+          </a>
+          <a href="#" aria-label="TikTok">
+            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/tiktok.svg" alt="TikTok" width="20" height="20">
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-copyright">
+      © 2025 Hair Harmony &nbsp;|&nbsp; Designed by You
+    </div>
+  </div>
+</footer>

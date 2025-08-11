@@ -9,4 +9,5 @@ import java.util.List;
 public interface LoyaltyPointRepository extends JpaRepository<LoyaltyPoint, Integer> {
     List<LoyaltyPoint> findByCustomer(User customer);
     // Tìm theo loại điểm, tổng điểm, v.v. có thể thêm sau
+      List<LoyaltyPoint> findByCustomer_IdOrderByCreatedAtDesc(Integer customerId);
 }

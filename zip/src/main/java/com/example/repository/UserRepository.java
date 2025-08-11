@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByFullNameContainingIgnoreCase(String keyword);
     // Thêm các hàm search/filter khác khi cần
     Optional<User> findById(Integer id);
+     Optional<User> findByUsernameIgnoreCaseOrEmailIgnoreCase(String username, String email);
+    boolean existsByUsernameIgnoreCase(String username);
+    boolean existsByEmailIgnoreCase(String email);
 }

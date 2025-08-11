@@ -1,0 +1,58 @@
+<!-- KHÔNG đặt doctype ở file fragment -->
+<header class="header"
+        th:fragment="siteHeader"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+  <nav class="navbar">
+    <a th:href="@{/}" class="logo" aria-label="Trang chủ">
+      <span class="logo-icon" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" role="img">
+          <ellipse cx="11" cy="11" rx="10" ry="7" fill="#B0D4B8"></ellipse>
+          <ellipse cx="11" cy="10" rx="7" ry="3.5" fill="#fff"></ellipse>
+        </svg>
+      </span>
+    </a>
+
+    <!-- SEARCH BAR -->
+    <form class="search-bar" th:action="@{/search}" method="get" role="search">
+      <input type="text" name="q" placeholder="Tìm dịch vụ, stylist..." required th:value="${param.q}">
+      <button type="submit" aria-label="Tìm kiếm"><span>&#128269;</span></button>
+    </form>
+
+    <div class="nav-menu">
+      <a th:href="@{/}"
+   th:classappend="${currentPath == '/'} ? ' active' : ''">Trang chủ</a>
+
+<a th:href="@{/services}"
+   th:classappend="${#strings.startsWith(currentPath, '/services')} ? ' active' : ''">Dịch vụ</a>
+
+<a th:href="@{/stylists}"
+   th:classappend="${#strings.startsWith(currentPath, '/stylists')} ? ' active' : ''">Stylists</a>
+
+<a th:href="@{/booking}"
+   th:classappend="${#strings.startsWith(currentPath, '/booking')} ? ' active' : ''">Đặt lịch</a>
+
+<a th:href="@{/contact}"
+   th:classappend="${#strings.startsWith(currentPath, '/contact')} ? ' active' : ''">Liên hệ</a>
+
+<a th:href="@{/support}"
+   th:classappend="${#strings.startsWith(currentPath, '/support')} ? ' active' : ''">Hỗ trợ</a>
+
+
+      <!-- CHƯA đăng nhập -->
+<span class="nav-auth" sec:authorize="isAnonymous()">
+  <a class="nav-cta" th:href="@{/login}">Đăng nhập</a>
+</span>
+
+<!-- ĐÃ đăng nhập -->
+<div class="nav-auth" sec:authorize="isAuthenticated()">
+  <a class="user-link" th:href="@{/profile}">
+    <span class="user-name" sec:authentication="name">user</span>
+  </a>
+  <!-- (giữ nút Đăng xuất nếu bạn cần, còn không thì xoá 3 dòng dưới) -->
+  
+</div>
+
+    </div>
+  </nav>
+</header>

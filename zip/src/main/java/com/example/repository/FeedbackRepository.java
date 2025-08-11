@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
+    List<Feedback> findByCustomer_IdOrderByCreatedAtDesc(Integer customerId);
     List<Feedback> findByCustomer(User customer);
     List<Feedback> findByRating(int rating);
     // Thêm search/filter theo content nếu muốn

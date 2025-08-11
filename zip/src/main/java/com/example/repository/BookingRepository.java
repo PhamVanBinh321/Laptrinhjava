@@ -82,4 +82,6 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
     """)
     List<Object[]> topCustomers(@Param("start") LocalDateTime start,
                                 @Param("end")   LocalDateTime end);
+
+        List<Booking> findByCustomer_IdOrderByBookingTimeDesc(Integer customerId);
 }
