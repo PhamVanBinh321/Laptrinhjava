@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security  ">
+<head>
+  <meta charset="UTF-8">
+  <title>Dịch vụ - Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/styles.css}" rel="stylesheet">
+
+  <style>
+    /* CSS cho phần lọc và tìm kiếm */
+    .service-filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+      max-width: 1120px;
+      box-shadow: 0 2px 12px #5d7b6f18;
+    }
+
+    .service-filter-bar input[type="text"] {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.75rem 1rem;
+      border: 2px solid #B0D4B8;
+      border-radius: 16px;
+      font-size: 1rem;
+      color: #5D7B6F;
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .service-filter-bar input[type="text"]:focus {
+      border-color: #5cb156;
+    }
+
+    .service-filter-bar select {
+      padding: 0.75rem 1rem;
+      border: 2px solid #B0D4B8;
+      border-radius: 16px;
+      background-color: #fff;
+      font-size: 1rem;
+      color: #5D7B6F;
+      min-width: 180px;
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .service-filter-bar select:focus {
+      border-color: #5cb156;
+    }
+
+    .service-filter-bar button {
+      padding: 0.75rem 1.5rem;
+      background-color: #5D7B6F;
+      color: white;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 8px #a4c3a255;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .service-filter-bar button:hover {
+      background-color: #5cb156;
+    }
+
+    /* Responsive cho thanh lọc */
+    @media (max-width: 768px) {
+      .service-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+      }
+      
+      .service-filter-bar input,
+      .service-filter-bar select,
+      .service-filter-bar button {
+        width: 100%;
+      }
+    }
+  </style>
+  <!-- CSS chung -->
+</head>
+<body>
+<!-- HEADER -->
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<main>
+  <!-- Hero -->
+  <section class="services-hero">
+    <h1>Dịch vụ của Hair Harmony</h1>
+    <p>Đa dạng lựa chọn từ cắt, uốn, nhuộm đến chăm sóc chuyên sâu –<br>đáp ứng mọi nhu cầu về mái tóc của bạn!</p>
+  </section>
+
+  <!-- Thanh tìm kiếm + sort -->
+  <section class="services-list-section">
+    <form class="service-filter-bar" th:action="@{/services}" method="get">
+      <input type="text" name="q" placeholder="Tìm dịch vụ..." th:value="${q}">
+      <select name="sort">
+        <option th:value="name" th:selected="${sort=='name'}">Sắp xếp: Tên</option>
+        <option th:value="price" th:selected="${sort=='price'}">Sắp xếp: Giá</option>
+        <option th:value="duration" th:selected="${sort=='duration'}">Sắp xếp: Thời lượng</option>
+      </select>
+      <button type="submit">Lọc</button>
+    </form>
+
+    <!-- List dạng grid -->
+    <div class="service-list-grid">
+      <div class="service-card" th:each="s : ${services}">
+        <!-- Ảnh -->
+        <img th:if="${s.image != null and !#strings.isEmpty(s.image)}" th:src="${s.image}" alt="service image">
+        <img th:unless="${s.image != null and !#strings.isEmpty(s.image)}" th:src="@{/images/placeholder-service.jpg}" alt="service image">
+
+        <div class="service-info">
+          <h3 th:text="${s.name}">Tên dịch vụ</h3>
+          <div class="service-price">
+            <!-- hiển thị đơn giản, nếu muốn format VNĐ có thể dùng NumberFormat trong controller -->
+            <span>Giá: </span><span th:text="${s.price}">0</span><span> đ</span>
+          </div>
+          <p th:text="${s.intro}">Mô tả ngắn…</p>
+
+          <div class="service-meta">
+            <span>Thời lượng: <b th:text="${s.duration}">0</b> phút</span>
+          </div>
+
+          <div class="service-btn-group">
+            <a th:href="@{/booking}" class="service-btn btn-booking">Đặt lịch</a>
+            <a th:href="@{'/services/' + ${s.id}}" class="service-btn btn-more">Xem thêm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phân trang -->
+    <div class="pagination" th:if="${services.totalPages > 1}">
+      <a th:if="${services.hasPrevious()}"
+         th:href="@{/services(page=${services.number-1},size=${services.size},q=${q},sort=${sort})}">&laquo; Trước</a>
+
+      <span>Trang <b th:text="${services.number + 1}">1</b>/<span th:text="${services.totalPages}">1</span></span>
+
+      <a th:if="${services.hasNext()}"
+         th:href="@{/services(page=${services.number+1},size=${services.size},q=${q},sort=${sort})}">Sau &raquo;</a>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>

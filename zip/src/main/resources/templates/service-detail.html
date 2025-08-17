@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${s.name} + ' - Hair Harmony'">Chi tiết dịch vụ - Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+
+  <style>
+    body { background:#EAE7D6; }
+    .detail-hero { background: linear-gradient(90deg,#D7F9FA 65%,#B0D4B8 100%); padding:32px 0; }
+    .detail-hero-inner { max-width:1040px; margin:0 auto; padding:0 16px; display:flex; gap:28px; align-items:center; flex-wrap:wrap; }
+    .detail-hero-img { width:320px; max-width:44vw; border-radius:22px; object-fit:cover; box-shadow:0 4px 24px #5d7b6f28; border:6px solid #fff; }
+    .detail-hero-text { flex:1; min-width:280px; }
+    .detail-title { font-size:2.2rem; color:#5D7B6F; font-weight:800; margin:6px 0 10px; line-height:1.15; }
+    .detail-meta { color:#6e7f75; margin-bottom:10px; }
+    .btn-detail { display:inline-block; background:#5D7B6F; color:#fff; font-weight:600; border-radius:14px; padding:10px 26px; border:none; }
+    .btn-detail:hover { background:#A4C3A2; }
+    .detail-desc-wrap { background:#fff; padding:28px 0 40px; }
+    .detail-desc-inner { max-width:900px; margin:0 auto; padding:0 16px; }
+    .detail-desc-title { font-size:1.4rem; font-weight:700; color:#5D7B6F; margin-bottom:10px; }
+    .detail-desc { font-size:1.05rem; color:#333; line-height:1.75; white-space:pre-line; }
+    @media (max-width:700px){ .detail-title{font-size:1.7rem} .detail-hero-img{max-width:92vw} }
+  </style>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<section class="detail-hero">
+  <div class="detail-hero-inner">
+    <img class="detail-hero-img"
+         th:src="${#strings.isEmpty(s.image)} ? @{/images/placeholder-service.jpg} : ${s.image}"
+         th:alt="${s.name}" alt="service image">
+    <div class="detail-hero-text">
+      <h1 class="detail-title" th:text="${s.name}">Tên dịch vụ</h1>
+
+      <div class="detail-meta">
+        <div><b>Giá:</b> <span th:text="${s.price}">0</span> đ</div>
+        <div><b>Thời lượng:</b> <span th:text="${s.duration}">0</span> phút</div>
+        <div th:if="${s.status != null}">
+          <b>Trạng thái:</b> <span th:text="${s.status}">ACTIVE</span>
+        </div>
+      </div>
+
+      <p class="text-muted" th:text="${s.intro}">Mô tả ngắn…</p>
+
+      <a class="btn-detail" th:href="@{/booking(serviceId=${s.id})}">Đặt lịch ngay</a>
+    </div>
+  </div>
+</section>
+
+<section class="detail-desc-wrap">
+  <div class="detail-desc-inner">
+    <div class="detail-desc-title">Giới thiệu chi tiết</div>
+    <!-- Dùng white-space: pre-line để xuống dòng theo dữ liệu -->
+    <div class="detail-desc" th:text="${s.description}">Nội dung mô tả…</div>
+  </div>
+</section>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>

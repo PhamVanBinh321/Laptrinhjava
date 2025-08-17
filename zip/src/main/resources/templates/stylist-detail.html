@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${(stylist.user != null && !#strings.isEmpty(stylist.user.fullName) ? stylist.user.fullName : stylist.user.username) + ' - Hair Harmony'}">Stylist - Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <style>
+    body{background:#EAE7D6}
+    .detail-hero{width:100vw;min-height:280px;background:linear-gradient(90deg,#D7F9FA 65%,#B0D4B8 100%);
+      display:flex;align-items:center;justify-content:center;padding:40px 0;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)}
+    .detail-hero-inner{display:flex;align-items:flex-end;max-width:1100px;width:100%;gap:28px;flex-wrap:wrap;padding:0 14px}
+    .detail-img{width:300px;max-width:44vw;border-radius:18px;object-fit:cover;box-shadow:0 4px 28px #5d7b6f28;border:6px solid #fff}
+    .detail-title{font-size:2.1rem;color:#5D7B6F;font-weight:800;margin:0 0 8px 0}
+    .detail-meta{color:#6e7f75}
+    .desc-wrap{background:#fff;max-width:1000px;margin:0 auto 26px auto;padding:22px;border-radius:16px;box-shadow:0 2px 16px #5d7b6f1a}
+    .btn{display:inline-block;background:#5D7B6F;color:#fff;padding:10px 20px;border-radius:12px;text-decoration:none;font-weight:600}
+    .btn:hover{background:#A4C3A2}
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<section class="detail-hero">
+  <div class="detail-hero-inner">
+<img class="detail-img"
+  th:src="${stylist.user != null and stylist.user.avatar != null and !#strings.isEmpty(stylist.user.avatar)}
+           ? @{/uploads/avatar/{img}(img=${stylist.user.avatar})}
+           : @{/uploads/avatar/default.png}"
+  alt="Avatar stylist"/>
+    <div>
+      <div class="detail-title"
+           th:text="${stylist.user != null && !#strings.isEmpty(stylist.user.fullName) ? stylist.user.fullName : stylist.user.username}">Tên stylist</div>
+      <div class="detail-meta">
+        <div><b>Kinh nghiệm:</b> <span th:text="${stylist.experienceYears}">0</span> năm</div>
+        <div><b>Cấp bậc:</b> <span th:text="${stylist.level}">Level</span></div>
+        <div><b>Chuyên môn:</b> <span th:text="${stylist.specialties}">Chuyên môn</span></div>
+        <div><b>Khách đã phục vụ:</b> <span th:text="${stylist.servedCustomers}">0</span>+</div>
+      </div>
+      <a class="btn" th:href="@{/booking(stylist=${stylist.userId})}">Đặt lịch với stylist này</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding:16px">
+  <div class="desc-wrap">
+    <h3 style="color:#5D7B6F;margin-top:0">Giới thiệu chi tiết</h3>
+    <div th:text="${stylist.bio}">Bio…</div>
+  </div>
+</section>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>

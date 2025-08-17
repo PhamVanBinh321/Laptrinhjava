@@ -32,8 +32,11 @@
 <a th:href="@{/booking}"
    th:classappend="${#strings.startsWith(currentPath, '/booking')} ? ' active' : ''">Đặt lịch</a>
 
-<a th:href="@{/contact}"
-   th:classappend="${#strings.startsWith(currentPath, '/contact')} ? ' active' : ''">Liên hệ</a>
+<a th:href="@{/reviews}"
+   th:classappend="${#strings.startsWith(currentPath, '/reviews')} ? ' active' : ''">
+  Đánh giá
+</a>
+
 
 <a th:href="@{/support}"
    th:classappend="${#strings.startsWith(currentPath, '/support')} ? ' active' : ''">Hỗ trợ</a>

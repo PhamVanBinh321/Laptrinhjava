@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Stylist - Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <style>
+    /* CSS cho phần stylist - Đã điều chỉnh để phù hợp với phần stylist */
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+      max-width: 1120px;
+      box-shadow: 0 2px 12px #5d7b6f18;
+    }
+
+    .filter-bar input[type="text"] {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.75rem 1rem;
+      border: 2px solid #B0D4B8;
+      border-radius: 16px;
+      font-size: 1rem;
+      color: #5D7B6F;
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .filter-bar input[type="text"]:focus {
+      border-color: #5cb156;
+    }
+
+    .filter-bar select {
+      padding: 0.75rem 1rem;
+      border: 2px solid #B0D4B8;
+      border-radius: 16px;
+      background-color: #fff;
+      font-size: 1rem;
+      color: #5D7B6F;
+      min-width: 180px;
+      outline: none;
+      transition: border-color 0.3s;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .filter-bar select:focus {
+      border-color: #5cb156;
+    }
+
+    .filter-bar button {
+      padding: 0.75rem 1.5rem;
+      background-color: #5D7B6F;
+      color: white;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 8px #a4c3a255;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .filter-bar button:hover {
+      background-color: #5cb156;
+    }
+
+    /* Responsive cho thanh lọc */
+    @media (max-width: 768px) {
+      .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 1rem;
+      }
+      
+      .filter-bar input,
+      .filter-bar select,
+      .filter-bar button {
+        width: 100%;
+      }
+    }
+
+    /* CSS cho danh sách stylist */
+    .stylist-hero {
+      text-align: center;
+      padding: 3rem 1rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      margin-bottom: 2rem;
+    }
+
+    .stylist-hero h1 {
+      color: #5D7B6F;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .stylist-hero p {
+      color: #6c757d;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stylist-list-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stylist-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(93, 123, 111, 0.15);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stylist-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(93, 123, 111, 0.2);
+    }
+
+    .stylist-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-bottom: 3px solid #B0D4B8;
+    }
+
+    .stylist-info {
+      padding: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .stylist-info h3 {
+      color: #5D7B6F;
+      margin: 0 0 0.5rem 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .stylist-meta {
+      color: #5cb156;
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+      font-weight: 500;
+    }
+
+    .stylist-info p {
+      color: #6c757d;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin: 0 0 1.2rem 0;
+    }
+
+    .stylist-btn-group {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .stylist-btn {
+      flex: 1;
+      padding: 0.6rem 0;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn-booking {
+      background-color: #5D7B6F;
+      color: white;
+    }
+
+    .btn-booking:hover {
+      background-color: #5cb156;
+    }
+
+    .btn-more {
+      background-color: #f8f9fa;
+      color: #5D7B6F;
+      border: 1px solid #B0D4B8;
+    }
+
+    .btn-more:hover {
+      background-color: #B0D4B8;
+      color: white;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      font-size: 0.95rem;
+    }
+
+    .pagination a, .pagination span {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .pagination a {
+      background-color: #5D7B6F;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+    .pagination a:hover {
+      background-color: #5cb156;
+    }
+
+    .pagination span {
+      background-color: #f8f9fa;
+      color: #5D7B6F;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .stylist-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .pagination {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      
+      .pagination a, .pagination span {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<main>
+  <section class="stylist-hero">
+    <h1>Đội ngũ stylist</h1>
+    <p>Chuyên gia hàng đầu, sáng tạo, tâm huyết với từng kiểu tóc.</p>
+  </section>
+
+  <section class="container-narrow" style="max-width:1100px;margin:0 auto;padding:0 14px 26px 14px;">
+    <!-- filter -->
+    <form class="filter-bar" th:action="@{/stylists}" method="get">
+      <input type="text" name="q" placeholder="Tìm theo tên, chuyên môn..." th:value="${q}">
+      <select name="sort">
+        <option th:value="name" th:selected="${sort=='name'}">Sắp xếp: Tên</option>
+        <option th:value="experience" th:selected="${sort=='experience'}">Sắp xếp: Kinh nghiệm</option>
+      </select>
+      <button type="submit">Lọc</button>
+    </form>
+
+    <!-- list -->
+    <div class="stylist-list-grid">
+      <div class="stylist-card" th:each="sp : ${stylists}">
+        <img
+  th:src="${sp.user != null and sp.user.avatar != null and !#strings.isEmpty(sp.user.avatar)}
+           ? @{/uploads/avatar/{img}(img=${sp.user.avatar})}
+           : @{/uploads/avatar/default.png}"
+  alt="Avatar" />
+
+        <div class="stylist-info">
+          <h3 th:text="${sp.user != null && !#strings.isEmpty(sp.user.fullName) ? sp.user.fullName : sp.user.username}">Tên stylist</h3>
+          <div class="stylist-meta">
+            <span th:text="${sp.experienceYears}">0</span> năm ·
+            <span th:text="${sp.level}">Level</span>
+          </div>
+          <p th:text="${sp.intro}">Giới thiệu ngắn…</p>
+          <div class="stylist-btn-group">
+            <a th:href="@{/booking(stylist=${sp.userId})}" class="stylist-btn btn-booking">Đặt lịch</a>
+            <a th:href="@{'/stylists/' + ${sp.userId}}" class="stylist-btn btn-more">Xem thêm</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- pagination -->
+    <div class="pagination" th:if="${stylists.totalPages > 1}">
+      <a th:if="${stylists.hasPrevious()}"
+         th:href="@{/stylists(page=${stylists.number-1},size=${stylists.size},q=${q},sort=${sort})}">&laquo; Trước</a>
+      <span>Trang <b th:text="${stylists.number + 1}">1</b>/<span th:text="${stylists.totalPages}">1</span></span>
+      <a th:if="${stylists.hasNext()}"
+         th:href="@{/stylists(page=${stylists.number+1},size=${stylists.size},q=${q},sort=${sort})}">Sau &raquo;</a>
+    </div>
+  </section>
+</main>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+</body>
+</html>

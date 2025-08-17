@@ -5,16 +5,34 @@ import com.example.repository.ServiceRepository;
 import com.example.repository.StylistProfileRepository;
 import com.example.service.StylistProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-
+import com.example.model.StylistProfile;
+import com.example.repository.StylistProfileRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
 @Service
 public class StylistProfileServiceImpl implements StylistProfileService {
 
 
         private final StylistProfileRepository stylistProfileRepository;
 
+    public Page<StylistProfile> findPage(String q, String sort, int page, int size) {
+        Sort s;
+        if ("experience".equalsIgnoreCase(sort)) {
+            s = Sort.by(Sort.Direction.DESC, "experienceYears")
+                    .and(Sort.by(Sort.Direction.ASC, "user.fullName"))
+                    .and(Sort.by(Sort.Direction.ASC, "user.username"));
+        } else { // default: name
+            s = Sort.by(Sort.Direction.ASC, "user.fullName")
+                    .and(Sort.by(Sort.Direction.ASC, "user.username"));
+        }
+        Pageable pageable = PageRequest.of(Math.max(page,0), Math.max(size,1), s);
+        return stylistProfileRepository.search(q, pageable);
+    }
 
     @Override
     public List<StylistProfile> searchStylists(String keyword, String level) {

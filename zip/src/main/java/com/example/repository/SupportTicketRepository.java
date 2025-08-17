@@ -20,6 +20,7 @@ public interface SupportTicketRepository extends JpaRepository<SupportTicket, In
     List<SupportTicket> findByStatus(SupportTicket.Status status);
     List<SupportTicket> findByType(SupportTicket.TicketType type);
     List<SupportTicket> findByUser_IdOrderByCreatedAtDesc(Integer userId);
+    
     // Tìm kiếm theo từ khóa (title, message, user name) và lọc theo status
     @Query("SELECT t FROM SupportTicket t JOIN t.user u " +
        "WHERE (:keyword IS NULL OR LOWER(t.title) LIKE LOWER(CONCAT('%', :keyword, '%')) " +

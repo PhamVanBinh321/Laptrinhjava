@@ -3,12 +3,15 @@ package com.example.repository;
 
 import com.example.model.Feedback;
 import com.example.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-
+import com.example.model.Feedback;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.Repository;
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     List<Feedback> findByCustomer_IdOrderByCreatedAtDesc(Integer customerId);
     List<Feedback> findByCustomer(User customer);
@@ -27,5 +30,11 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
     """)
     List<Feedback> search(@Param("kw")    String  keyword,
                           @Param("rate")  Integer rating);
+            
+     @EntityGraph(attributePaths = {"customer"})                      
+     Page<Feedback> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    @Query("select coalesce(avg(f.rating),0), count(f) from Feedback f")
+    Object[] aggregateAll();
 
 }
