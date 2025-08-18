@@ -33,6 +33,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(reg -> reg
                 .requestMatchers("/", "/home", "/login", "/register",
                                  "/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
+                .requestMatchers("/booking", "/booking/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
             )

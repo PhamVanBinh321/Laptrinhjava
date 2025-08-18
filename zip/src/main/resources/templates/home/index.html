@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Chào mừng đến với <span>Hair Harmony</span></h1>
+      <p>Khám phá trải nghiệm chăm sóc tóc chuyên nghiệp,<br>
+        đặt lịch dễ dàng cùng những stylist hàng đầu.</p>
+      <a th:href="@{/booking}" class="hero-cta">Đặt lịch ngay</a>
+    </div>
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=520&q=80"
+           alt="Hair Salon">
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section">
+    <h2>Dịch vụ nổi bật</h2>
+    <div class="services-list">
+      <div class="service-card" th:each="s : ${servicesTop}">
+        <!-- Ảnh -->
+        <img th:if="${s.image != null and !#strings.isEmpty(s.image)}" th:src="${s.image}" alt="service">
+        <img th:unless="${s.image != null and !#strings.isEmpty(s.image)}" th:src="@{/images/placeholder-service.jpg}" alt="service">
+        <!-- Tên/intro -->
+        <h3 th:text="${s.name}">Cắt tạo kiểu</h3>
+        <p th:text="${#strings.isEmpty(s.intro) ? 'Dịch vụ chất lượng, tư vấn tận tâm.' : s.intro}">
+          Mô tả ngắn…
+        </p>
+        <a th:href="@{'/services/' + ${s.id}}" class="link-more">Xem chi tiết</a>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <a th:href="@{/services}" class="about-cta">Xem tất cả dịch vụ</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section">
+    <div class="about-content">
+      <h2>Vì sao chọn Hair Harmony?</h2>
+      <ul>
+        <li><b>Đội ngũ stylist giàu kinh nghiệm, tận tâm</b></li>
+        <li><b>Công nghệ &amp; sản phẩm chất lượng cao</b></li>
+        <li><b>Đặt lịch online nhanh chóng, nhận nhiều ưu đãi</b></li>
+      </ul>
+      <a th:href="@{/services}" class="about-cta">Xem thêm dịch vụ</a>
+    </div>
+    <div class="about-img">
+      <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=450&q=80" alt="Salon Hair Harmony">
+    </div>
+  </section>
+
+  <!-- STYLISTS -->
+  <section class="stylists-section">
+    <h2>Stylist nổi bật</h2>
+    <div class="stylists-list">
+      <div class="stylist-card" th:each="sty : ${stylistsTop}">
+        <!-- Avatar -->
+        <img th:if="${sty.user != null and !#strings.isEmpty(sty.user.avatar)}"
+             th:src="@{/uploads/avatar/{img}(img=${sty.user.avatar})}" alt="stylist">
+        <img th:unless="${sty.user != null and !#strings.isEmpty(sty.user.avatar)}"
+             th:src="@{/uploads/avatar/default.png}" alt="stylist">
+
+        <!-- Tên -->
+        <h4 th:text="${#strings.isEmpty(sty.user.fullName) ? sty.user.username : sty.user.fullName}">Stylist</h4>
+        <!-- Meta -->
+        <p>
+          <span th:text="${sty.experienceYears != null ? sty.experienceYears : 0}">0</span> năm kinh nghiệm<br>
+          <span th:text="${#strings.isEmpty(sty.specialties) ? 'Đa dạng dịch vụ' : sty.specialties}">Chuyên môn</span>
+        </p>
+
+        <div class="stylist-actions">
+          <a th:href="@{'/booking'(stylist=${sty.userId})}" class="about-cta">Đặt lịch</a>
+          <a th:href="@{'/stylists/' + ${sty.userId}}" class="link-more">Xem hồ sơ</a>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <a th:href="@{/stylists}" class="about-cta">Xem tất cả stylist</a>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+
+</body>
+</html>

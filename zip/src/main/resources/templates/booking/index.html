@@ -1,0 +1,514 @@
+<!-- src/main/resources/templates/booking/index.html -->
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Đặt lịch - Hair Harmony</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #5D7B6F;
+      --primary-light: #A4C3A2;
+      --primary-lighter: #B0D4B8;
+      --secondary: #D7F9FA;
+      --accent: #FFB6C1;
+      --background: #EAE7D6;
+      --card-bg: #FFFFFF;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --border: #E2E8F0;
+      --shadow: rgba(93, 123, 111, 0.1);
+    }
+    
+    body {
+      background: var(--background);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+    
+    .booking-section {
+      padding: 40px 20px;
+    }
+    
+    .booking-card {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px var(--shadow);
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+    
+    .booking-card:hover {
+      box-shadow: 0 15px 40px rgba(93, 123, 111, 0.15);
+    }
+    
+    .booking-title {
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 2.2rem;
+      margin-bottom: 25px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .booking-title:after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--primary-light);
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    
+    @media(min-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .field {
+      margin-bottom: 25px;
+    }
+    
+    .field label {
+      display: block;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+    
+    .select, .text {
+      
+      padding: 14px 16px;
+      border: 2px solid var(--primary-lighter);
+      border-radius: 12px;
+      background: #F7FDFD;
+      color: var(--primary);
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .select:focus, .text:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(164, 195, 162, 0.3);
+    }
+    
+    .service-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease;
+    }
+    
+    .service-item:hover {
+      background: rgba(164, 195, 162, 0.05);
+      border-radius: 8px;
+      padding: 15px;
+    }
+    
+    .service-item:last-child {
+      border-bottom: none;
+    }
+    
+    .service-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .price {
+      color: var(--primary-light);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    
+    .duration {
+      color: var(--primary-lighter);
+      font-size: 0.95rem;
+      background: rgba(176, 212, 184, 0.2);
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+    
+    .summary {
+      background: var(--secondary);
+      border-radius: 15px;
+      padding: 20px;
+      color: var(--primary);
+      box-shadow: 0 4px 12px rgba(215, 249, 250, 0.5);
+      border: 1px solid rgba(164, 195, 162, 0.3);
+    }
+    
+    .summary > div {
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+    }
+    
+    .summary b {
+      font-weight: 700;
+    }
+    
+    .summary hr {
+      border: none;
+      height: 1px;
+      background: var(--primary-lighter);
+      margin: 15px 0;
+    }
+    
+    #calendar-container {
+      background: var(--card-bg);
+      border-radius: 15px;
+      box-shadow: 0 4px 12px var(--shadow);
+      padding: 15px;
+      border: 1px solid var(--border);
+    }
+    
+    .fc-toolbar-title {
+      color: var(--primary);
+      font-weight: 700;
+    }
+    
+    .fc-event {
+      background: var(--primary-lighter);
+      color: var(--primary);
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 3px 6px;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 16px 0;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(93, 123, 111, 0.3);
+    }
+    
+    .btn-submit:hover {
+      background: #4a6358;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(93, 123, 111, 0.4);
+    }
+    
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+    
+    .muted {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+    
+    .form-check {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    
+    .form-check-input {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    
+    .form-check-label {
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    
+    .points-info {
+      background: rgba(215, 249, 250, 0.7);
+      padding: 12px;
+      border-radius: 10px;
+      margin-top: 10px;
+      border-left: 4px solid var(--primary-light);
+    }
+    
+    .section-title {
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--primary-lighter);
+    }
+    
+    .service-list-container {
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
+    .service-list-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .service-list-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .service-list-container::-webkit-scrollbar-thumb {
+      background: var(--primary-lighter);
+      border-radius: 10px;
+    }
+    
+    .service-list-container::-webkit-scrollbar-thumb:hover {
+      background: var(--primary-light);
+    }
+    
+    .checkbox-custom {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .discount-row {
+      color: #e74c3c;
+      font-weight: 600;
+    }
+    
+    .payable-row {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      border-top: 1px dashed var(--primary-lighter);
+      padding-top: 15px;
+      margin-top: 10px;
+    }
+    
+    .calendar-header {
+      background: rgba(164, 195, 162, 0.1);
+      padding: 15px;
+      border-radius: 12px 12px 0 0;
+      margin: -15px -15px 15px -15px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<main class="booking-section">
+  <form class="booking-card" th:action="@{/booking}" method="post" id="bookingForm">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <div class="booking-title">Đặt lịch làm tóc</div>
+
+    <div class="grid">
+      <!-- Cột trái -->
+      <div>
+        <!-- Chọn stylist -->
+        <div class="field">
+          <label for="stylist"><i class="fas fa-user-tie"></i> Chọn stylist</label>
+          <select id="stylist" name="stylistId" class="select" required>
+            <option value="">-- Chọn stylist --</option>
+           <option th:each="sty : ${stylists}"
+        th:value="${sty.userId}"
+        th:text="|${(sty.user.fullName != null and !#strings.isEmpty(sty.user.fullName)) ? sty.user.fullName : sty.user.username}
+                 (${sty.experienceYears != null ? sty.experienceYears : 0} năm) - ${sty.level != null ? sty.level : 'Junior'}|">
+</option>
+
+          </select>
+          <div class="muted" style="margin-top:6px;">Lịch bên dưới chỉ hiển thị các slot <b>đã được đặt</b>.</div>
+        </div>
+
+        <!-- Lịch (chỉ xem) -->
+        <div id="calendarWrap" style="display:none;margin-top:12px;">
+          <div class="calendar-header">
+            <i class="far fa-calendar-alt"></i> Lịch bận của stylist
+          </div>
+          <div id="calendar-container"><div id="calendar"></div></div>
+        </div>
+
+        <!-- Chọn ngày giờ riêng -->
+        <div class="field" style="margin-top:25px;">
+          <label for="dtLocal"><i class="far fa-clock"></i> Chọn ngày giờ</label>
+          <input id="dtLocal" type="datetime-local" name="datetime" class="text" required placeholder="yyyy-MM-ddTHH:mm">
+          <div class="muted">Chọn giờ phù hợp dựa theo lịch bận ở trên.</div>
+        </div>
+      </div>
+
+      <!-- Cột phải -->
+      <div>
+        <!-- Dịch vụ -->
+        <div class="field">
+          <label><i class="fas fa-cut"></i> Dịch vụ muốn sử dụng</label>
+          <div class="service-list-container">
+            <div id="serviceList">
+              <div class="service-item" th:each="s : ${services}">
+                <div class="service-left">
+                  <input type="checkbox" class="checkbox-custom svc" name="serviceIds"
+                         th:value="${s.id}" th:attr="data-price=${s.price},data-duration=${s.duration}">
+                  <span th:text="${s.name}">Tên DV</span>
+                  <span class="duration"><i class="far fa-clock"></i> <span th:text="${s.duration}">0</span> phút</span>
+                </div>
+                <div class="price" th:text="${#numbers.formatDecimal(s.price,0,'POINT',0,'COMMA')} + ' đ'">0 đ</div>
+              </div>
+            </div>
+          </div>
+          <div class="muted" style="margin-top:6px;">Có thể chọn nhiều dịch vụ.</div>
+        </div>
+
+        <!-- Dùng điểm -->
+        <div class="field">
+          <label><i class="fas fa-gift"></i> Điểm tích luỹ</label>
+          <div class="form-check">
+            <input type="checkbox" id="usePoints" name="usePoints" class="form-check-input" style="width:auto;">
+            <label for="usePoints" style="margin:0;">Sử dụng điểm tích luỹ</label>
+          </div>
+          <div class="points-info">
+            Bạn có <b id="userPoints" th:text="${points}">0</b> điểm (~
+            <span id="pointsValue" th:text="${points * pointValue}">0</span> đ).
+          </div>
+          <input type="hidden" id="pointValue" th:value="${pointValue}">
+        </div>
+
+        <!-- Tổng -->
+        <div class="summary" id="summaryBox">
+          <div class="summary-row">
+            <span>Tổng tiền dịch vụ:</span>
+            <b id="sumPrice">0 đ</b>
+          </div>
+          <div class="muted" id="sumTime">Tổng thời gian dự kiến: 0 phút</div>
+          <div class="summary-row discount-row" id="discountRow" style="display:none;">
+            <span>Trừ điểm:</span>
+            <b id="discountText">0 đ</b>
+          </div>
+          <hr>
+          <div class="summary-row payable-row">
+            <span>Thanh toán dự kiến:</span>
+            <b id="payable">0 đ</b>
+          </div>
+        </div>
+
+        <!-- Thanh toán -->
+        <div class="field" style="margin-top:20px;">
+          <label><i class="fas fa-credit-card"></i> Phương thức thanh toán</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="pm1" value="OFFLINE" checked>
+            <label class="form-check-label" for="pm1"><i class="fas fa-store"></i> Tại salon</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="pm2" value="ONLINE">
+            <label class="form-check-label" for="pm2"><i class="fas fa-globe"></i> Online</label>
+          </div>
+        </div>
+
+        <button class="btn-submit" type="submit">
+          <i class="fas fa-calendar-check"></i> Đặt lịch ngay
+        </button>
+      </div>
+    </div>
+  </form>
+</main>
+
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
+
+<script>
+  let calendar = null;
+
+  function fmtVND(n){ return (n||0).toLocaleString('vi-VN') + ' đ'; }
+
+  function recalc(){
+    const checks = document.querySelectorAll('#serviceList .svc:checked');
+    let sum = 0, mins = 0;
+    checks.forEach(c => {
+      sum += parseFloat(c.dataset.price||0);
+      mins += parseInt(c.dataset.duration||0);
+    });
+    const points = parseInt(document.getElementById('userPoints').textContent || '0');
+    const pointValue = parseInt(document.getElementById('pointValue').value || '0');
+    let discount = 0;
+    if (document.getElementById('usePoints').checked && points > 0 && sum > 0) {
+      discount = Math.min(points * pointValue, sum);
+      document.getElementById('discountRow').style.display = '';
+      document.getElementById('discountText').textContent = fmtVND(discount);
+    } else {
+      document.getElementById('discountRow').style.display = 'none';
+    }
+    document.getElementById('sumPrice').textContent = fmtVND(sum);
+    document.getElementById('sumTime').textContent = 'Tổng thời gian dự kiến: ' + mins + ' phút';
+    document.getElementById('payable').textContent = fmtVND(sum - discount);
+  }
+  document.addEventListener('change', (e)=>{
+    if (e.target.classList.contains('svc') || e.target.id === 'usePoints') recalc();
+  });
+  recalc();
+
+  // Chọn stylist -> chỉ hiển thị lịch bận (không cho chọn trên lịch)
+  document.getElementById('stylist').addEventListener('change', function(){
+    const id = this.value;
+    const wrap = document.getElementById('calendarWrap');
+    if (!id){ wrap.style.display='none'; if (calendar) {calendar.destroy(); calendar=null;} return; }
+    wrap.style.display = '';
+
+    if (calendar) calendar.destroy();
+calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+  initialView: 'timeGridWeek',
+  slotMinTime: "08:00:00",
+  slotMaxTime: "20:00:00",
+  locale: 'vi',
+  selectable: false,          // bạn chọn giờ bằng input riêng, nên không cần select trên lịch
+  editable: false,
+  headerToolbar: { start: 'prev,next today', center: 'title', end: '' },
+  events: (info, successCallback, failureCallback) => {
+    const url = `/booking/api/stylists/${id}/busy?start=${encodeURIComponent(info.startStr)}&end=${encodeURIComponent(info.endStr)}`;
+    fetch(url)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => successCallback(data))
+      .catch(err => failureCallback(err));
+  }
+});
+calendar.render();
+
+// chặn submit form khi bấm nút prev/next của calendar
+document.getElementById('bookingForm').addEventListener('click', function (e) {
+  if (e.target.closest('.fc-button')) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+});
+}); // <-- This closes the stylist change event listener function
+
+</script>
+</body>
+</html>
+```

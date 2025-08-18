@@ -3,6 +3,8 @@ package com.example.repository;
 
 import com.example.model.Booking;
 import com.example.model.User;
+
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,7 +15,14 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-    List<Booking> findByCustomer(User customer);
+     
+      
+
+      List<Booking> findByStylist_IdAndBookingTimeBetween(
+        Integer stylistId, LocalDateTime start, LocalDateTime end
+    );
+
+       List<Booking> findByCustomer(User customer);
     List<Booking> findByStylist(User stylist);
     List<Booking> findByStatus(Booking.Status status);
     List<Booking> findByBookingTimeBetween(LocalDateTime start, LocalDateTime end);

@@ -10,7 +10,8 @@ import com.example.model.Service;
 import com.example.model.Service.Status;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import java.util.Collection;
+import java.util.List;
 import com.example.model.Service;
 import com.example.model.Service.Status;
 import org.springframework.data.domain.Page;
@@ -38,4 +39,8 @@ public interface ServiceRepository extends JpaRepository<Service, Integer> {
     Page<Service> search(@Param("q") String q,
                          @Param("status") Status status,
                          Pageable pageable);
+    
+     List<Service> findByStatusOrderByNameAsc(Service.Status status);
+    List<Service> findByIdIn(Collection<Integer> ids);
+    
 }
