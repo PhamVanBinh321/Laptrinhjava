@@ -1,13 +1,34 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security  ">
 <head>
   <meta charset="UTF-8">
   <title>Stylist - Hair Harmony</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link th:href="@{/css/styles.css}" rel="stylesheet">
   <style>
-    /* CSS cho phần stylist - Đã điều chỉnh để phù hợp với phần stylist */
+    /* Hero section cho stylist */
+    .stylist-hero {
+      background: linear-gradient(90deg, #D7F9FA 80%, #B0D4B8 100%);
+      padding: 58px 0 18px 0;
+      text-align: center;
+    }
+    
+    .stylist-hero h1 {
+      font-size: 2.25rem;
+      color: #5D7B6F;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+    
+    .stylist-hero p {
+      color: #5D7B6Fb0;
+      font-size: 1.18rem;
+      margin-bottom: 0;
+    }
+
+    /* Filter bar */
     .filter-bar {
       display: flex;
       gap: 1rem;
@@ -88,117 +109,123 @@
       }
     }
 
-    /* CSS cho danh sách stylist */
-    .stylist-hero {
-      text-align: center;
-      padding: 3rem 1rem;
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      margin-bottom: 2rem;
+    /* Stylist list section */
+    .stylist-list-section {
+      padding: 32px 0 36px 0;
+      background: #EAE7D6;
     }
-
-    .stylist-hero h1 {
-      color: #5D7B6F;
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-
-    .stylist-hero p {
-      color: #6c757d;
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
+    
     .stylist-list-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
 
     .stylist-card {
       background: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(93, 123, 111, 0.15);
-      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px #5d7b6f18;
       display: flex;
       flex-direction: column;
+      align-items: center;
+      transition: transform 0.15s, box-shadow 0.15s;
+      padding: 28px 18px 16px 18px;
+      min-height: 380px;
+      position: relative;
+      text-align: center;
+    }
+    
+    .stylist-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px #a4c3a244;
+      border: 4px solid #B0D4B8;
+    }
+    
+    .stylist-info h3 {
+      color: #5D7B6F;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+    }
+    
+    .stylist-meta {
+      color: #A4C3A2;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+    
+    .stylist-info p {
+      color: #5D7B6Fbb;
+      font-size: 1.02rem;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    /* Group 2 nút */
+    .stylist-btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: auto;
+      position: absolute;
+      left: 0; 
+      right: 0; 
+      bottom: 18px;
+      padding: 0 15px;
+    }
+    
+    .stylist-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      border: none;
+      box-shadow: 0 2px 8px #a4c3a255;
+      transition: all 0.18s;
+      cursor: pointer;
+      text-align: center;
+      flex: 1;
+      max-width: 120px;
+    }
+    
+    .btn-booking {
+      background: #5D7B6F;
+      color: #fff;
+    }
+    
+    .btn-booking:hover {
+      background: #B0D4B8;
+      color: #5D7B6F;
+      transform: translateY(-2px);
+    }
+    
+    .btn-more {
+      background: #fff;
+      color: #5D7B6F;
+      border: 2px solid #B0D4B8;
+      box-shadow: none;
+    }
+    
+    .btn-more:hover {
+      background: #A4C3A2;
+      color: #fff;
+      border-color: #A4C3A2;
+      transform: translateY(-2px);
     }
 
     .stylist-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(93, 123, 111, 0.2);
-    }
-
-    .stylist-card img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-bottom: 3px solid #B0D4B8;
-    }
-
-    .stylist-info {
-      padding: 1.5rem;
-      flex-grow: 1;
-    }
-
-    .stylist-info h3 {
-      color: #5D7B6F;
-      margin: 0 0 0.5rem 0;
-      font-size: 1.3rem;
-      font-weight: 600;
-    }
-
-    .stylist-meta {
-      color: #5cb156;
-      font-size: 0.95rem;
-      margin-bottom: 0.8rem;
-      font-weight: 500;
-    }
-
-    .stylist-info p {
-      color: #6c757d;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      margin: 0 0 1.2rem 0;
-    }
-
-    .stylist-btn-group {
-      display: flex;
-      gap: 0.8rem;
-    }
-
-    .stylist-btn {
-      flex: 1;
-      padding: 0.6rem 0;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition: all 0.3s;
-    }
-
-    .btn-booking {
-      background-color: #5D7B6F;
-      color: white;
-    }
-
-    .btn-booking:hover {
-      background-color: #5cb156;
-    }
-
-    .btn-more {
-      background-color: #f8f9fa;
-      color: #5D7B6F;
-      border: 1px solid #B0D4B8;
-    }
-
-    .btn-more:hover {
-      background-color: #B0D4B8;
-      color: white;
+      transform: translateY(-7px) scale(1.025);
+      box-shadow: 0 6px 24px #5d7b6f33;
     }
 
     /* Pagination */
@@ -206,36 +233,80 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 1rem;
-      margin: 2rem 0;
+      gap: 0.8rem;
+      margin: 2.5rem 0;
       font-size: 0.95rem;
     }
 
     .pagination a, .pagination span {
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
       text-decoration: none;
+      transition: all 0.3s;
     }
 
     .pagination a {
       background-color: #5D7B6F;
       color: white;
-      transition: background-color 0.3s;
+      border: 2px solid #5D7B6F;
     }
 
     .pagination a:hover {
       background-color: #5cb156;
+      border-color: #5cb156;
+      transform: translateY(-2px);
     }
 
     .pagination span {
       background-color: #f8f9fa;
       color: #5D7B6F;
       font-weight: 600;
+      border: 2px solid #e9ecef;
     }
 
+    .pagination .current {
+      background-color: #B0D4B8;
+      color: #5D7B6F;
+      font-weight: 700;
+      border: 2px solid #B0D4B8;
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .stylist-list-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+      }
+    }
+    
     @media (max-width: 768px) {
-      .stylist-hero h1 {
-        font-size: 2rem;
+      .stylist-hero {
+        padding: 34px 0 8px 0;
+      }
+      
+      .stylist-list-section {
+        padding: 14px 0 18px 0;
+      }
+      
+      .stylist-list-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 15px;
+      }
+      
+      .stylist-card {
+        min-height: 350px;
+      }
+      
+      .stylist-btn-group {
+        flex-direction: column;
+        gap: 10px;
+        position: static;
+        margin-top: 20px;
+      }
+      
+      .stylist-btn {
+        max-width: none;
       }
       
       .pagination {
@@ -246,6 +317,7 @@
       .pagination a, .pagination span {
         width: 100%;
         text-align: center;
+        padding: 0.8rem 1rem;
       }
     }
   </style>
@@ -259,48 +331,59 @@
     <p>Chuyên gia hàng đầu, sáng tạo, tâm huyết với từng kiểu tóc.</p>
   </section>
 
-  <section class="container-narrow" style="max-width:1100px;margin:0 auto;padding:0 14px 26px 14px;">
-    <!-- filter -->
-    <form class="filter-bar" th:action="@{/stylists}" method="get">
-      <input type="text" name="q" placeholder="Tìm theo tên, chuyên môn..." th:value="${q}">
-      <select name="sort">
-        <option th:value="name" th:selected="${sort=='name'}">Sắp xếp: Tên</option>
-        <option th:value="experience" th:selected="${sort=='experience'}">Sắp xếp: Kinh nghiệm</option>
-      </select>
-      <button type="submit">Lọc</button>
-    </form>
+  <section class="stylist-list-section">
+    <div class="container-narrow" style="max-width:1100px;margin:0 auto;padding:0 14px;">
+      <!-- filter -->
+      <form class="filter-bar" th:action="@{/stylists}" method="get">
+        <input type="text" name="q" placeholder="Tìm theo tên, chuyên môn..." th:value="${q}">
+        <select name="sort">
+          <option th:value="name" th:selected="${sort=='name'}">Sắp xếp: Tên</option>
+          <option th:value="experience" th:selected="${sort=='experience'}">Sắp xếp: Kinh nghiệm</option>
+        </select>
+        <button type="submit">Lọc</button>
+      </form>
 
-    <!-- list -->
-    <div class="stylist-list-grid">
-      <div class="stylist-card" th:each="sp : ${stylists}">
-        <img
-  th:src="${sp.user != null and sp.user.avatar != null and !#strings.isEmpty(sp.user.avatar)}
-           ? @{/uploads/avatar/{img}(img=${sp.user.avatar})}
-           : @{/uploads/avatar/default.png}"
-  alt="Avatar" />
+      <!-- list -->
+      <div class="stylist-list-grid">
+        <div class="stylist-card" th:each="sp : ${stylists}">
+          <img th:if="${sp.user != null and sp.user.avatar != null and !#strings.isEmpty(sp.user.avatar)}"
+               th:src="@{/uploads/avatar/{img}(img=${sp.user.avatar})}" 
+               alt="Avatar stylist" />
+          <img th:unless="${sp.user != null and sp.user.avatar != null and !#strings.isEmpty(sp.user.avatar)}"
+               src="https://placehold.co/100x100/e0e0e0/9e9e9e?text=S" 
+               alt="Avatar mặc định" />
 
-        <div class="stylist-info">
-          <h3 th:text="${sp.user != null && !#strings.isEmpty(sp.user.fullName) ? sp.user.fullName : sp.user.username}">Tên stylist</h3>
-          <div class="stylist-meta">
-            <span th:text="${sp.experienceYears}">0</span> năm ·
-            <span th:text="${sp.level}">Level</span>
-          </div>
-          <p th:text="${sp.intro}">Giới thiệu ngắn…</p>
-          <div class="stylist-btn-group">
-            <a th:href="@{/booking(stylist=${sp.userId})}" class="stylist-btn btn-booking">Đặt lịch</a>
-            <a th:href="@{'/stylists/' + ${sp.userId}}" class="stylist-btn btn-more">Xem thêm</a>
+          <div class="stylist-info">
+            <h3 th:text="${sp.user != null && !#strings.isEmpty(sp.user.fullName) ? sp.user.fullName : sp.user.username}">Tên stylist</h3>
+            <div class="stylist-meta">
+              <span th:text="${sp.experienceYears}">0</span> năm kinh nghiệm ·
+              <span th:text="${sp.level}">Level</span>
+            </div>
+            <p th:text="${sp.intro}">Giới thiệu ngắn…</p>
+            <div class="stylist-btn-group">
+              <a th:href="@{/booking(stylist=${sp.userId})}" class="stylist-btn btn-booking">Đặt lịch</a>
+              <a th:href="@{'/stylists/' + ${sp.userId}}" class="stylist-btn btn-more">Xem thêm</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- pagination -->
-    <div class="pagination" th:if="${stylists.totalPages > 1}">
-      <a th:if="${stylists.hasPrevious()}"
-         th:href="@{/stylists(page=${stylists.number-1},size=${stylists.size},q=${q},sort=${sort})}">&laquo; Trước</a>
-      <span>Trang <b th:text="${stylists.number + 1}">1</b>/<span th:text="${stylists.totalPages}">1</span></span>
-      <a th:if="${stylists.hasNext()}"
-         th:href="@{/stylists(page=${stylists.number+1},size=${stylists.size},q=${q},sort=${sort})}">Sau &raquo;</a>
+      <!-- pagination -->
+      <div class="pagination" th:if="${stylists.totalPages > 1}">
+        <a th:if="${stylists.hasPrevious()}"
+           th:href="@{/stylists(page=${stylists.number-1},size=${stylists.size},q=${q},sort=${sort})}">&laquo; Trước</a>
+        
+        <!-- Hiển thị các trang -->
+        <th:block th:each="i : ${#numbers.sequence(0, stylists.totalPages - 1)}">
+          <a th:if="${i != stylists.number}"
+             th:href="@{/stylists(page=${i},size=${stylists.size},q=${q},sort=${sort})}"
+             th:text="${i + 1}">1</a>
+          <span th:unless="${i != stylists.number}" class="current" th:text="${i + 1}">1</span>
+        </th:block>
+        
+        <a th:if="${stylists.hasNext()}"
+           th:href="@{/stylists(page=${stylists.number+1},size=${stylists.size},q=${q},sort=${sort})}">Sau &raquo;</a>
+      </div>
     </div>
   </section>
 </main>

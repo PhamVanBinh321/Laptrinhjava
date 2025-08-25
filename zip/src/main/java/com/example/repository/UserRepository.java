@@ -18,5 +18,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      Optional<User> findByUsernameIgnoreCaseOrEmailIgnoreCase(String username, String email);
     boolean existsByUsernameIgnoreCase(String username);
     boolean existsByEmailIgnoreCase(String email);
-    
+     boolean existsByEmailAndIdNot(String email, Integer id); // check trùng email với user khác
 }

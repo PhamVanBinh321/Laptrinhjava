@@ -20,4 +20,7 @@ public interface LoyaltyPointRepository extends JpaRepository<LoyaltyPoint, Inte
         where lp.customer.id = :cid
     """)
     Integer getBalance(@Param("cid") Integer customerId);
+     boolean existsByCustomer_IdAndTypeAndDescription(Integer customerId,
+                                                     LoyaltyPoint.Type type,
+                                                     String description);
 }

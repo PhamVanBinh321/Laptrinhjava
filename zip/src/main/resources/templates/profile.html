@@ -33,7 +33,7 @@
 
 <div class="profile-wrap">
   <div class="profile-header">
-    <img th:src="${#strings.isEmpty(user.avatar) ? 'https://i.pravatar.cc/120?img=42' : user.avatar}"
+    <img th:src="${#strings.isEmpty(user.avatar) ? '/uploads/avaatr/default.png' : user.avatar}"
          class="profile-avatar" alt="avatar"/>
 
     <div class="profile-info">
@@ -81,7 +81,7 @@
       <table class="table table-bordered table-hover align-middle" th:if="${!#lists.isEmpty(bookings)}">
         <thead>
         <tr style="background:#B0D4B8;color:#fff;">
-          <th>Ngày</th><th>Stylist</th><th>Dịch vụ</th><th>Giá</th><th>Trạng thái</th><th>Đánh giá</th>
+          <th>Ngày</th><th>Stylist</th><th>Dịch vụ</th><th>Giá</th><th>Trạng thái</th>
         </tr>
         </thead>
         <tbody>
@@ -95,18 +95,7 @@
             <span th:if="${b.status == 'CONFIRMED' or b.status == 'PENDING'}" class="status-booked">Đã đặt</span>
             <span th:if="${b.status == 'CANCELLED' or b.status == 'NO_SHOW'}" class="status-cancel">Đã hủy</span>
           </td>
-          <td>
-            <span th:if="${b.status == 'DONE'}">
-              <span th:if="${b.feedbackGiven}" class="text-success">
-                <i class="fa fa-check-circle"></i> Đã đánh giá
-              </span>
-              <a th:if="${!b.feedbackGiven}" class="btn btn-sm btn-profile"
-                 th:href="@{'/feedback/new?bookingId=' + ${b.id}}">
-                Đánh giá
-              </a>
-            </span>
-            <span th:if="${b.status != 'DONE'}" class="text-muted">-</span>
-          </td>
+         
         </tr>
         </tbody>
       </table>

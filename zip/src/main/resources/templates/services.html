@@ -118,8 +118,8 @@
     <div class="service-list-grid">
       <div class="service-card" th:each="s : ${services}">
         <!-- Ảnh -->
-        <img th:if="${s.image != null and !#strings.isEmpty(s.image)}" th:src="${s.image}" alt="service image">
-        <img th:unless="${s.image != null and !#strings.isEmpty(s.image)}" th:src="@{/images/placeholder-service.jpg}" alt="service image">
+        <img th:if="${s.image != null and !#strings.isEmpty(s.image)}" th:src="@{/uploads/services/{img}(img=${s.image})}" alt="service image">
+        <img th:unless="${s.image != null and !#strings.isEmpty(s.image)}" th:src="@{/uploads/services/{img}(img=${s.image})}" alt="service image">
 
         <div class="service-info">
           <h3 th:text="${s.name}">Tên dịch vụ</h3>

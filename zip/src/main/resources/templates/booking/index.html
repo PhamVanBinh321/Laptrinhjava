@@ -441,8 +441,57 @@
 </main>
 
 <div th:replace="~{fragments/footer :: siteFooter}"></div>
-
+<th:block th:replace="~{fragments/alert :: toast}"></th:block>
 <script>
+    // Thêm đoạn script giới hạn thời gian sau đoạn script hiện tại
+  document.addEventListener('DOMContentLoaded', function() {
+    const datetimeInput = document.getElementById('dtLocal');
+    
+    // Hàm để set giới hạn thời gian
+    function setDateTimeConstraints() {
+      const now = new Date();
+      
+      // Set min: hiện tại (không cho đặt trong quá khứ)
+      const minDate = new Date(now.getTime() + 5*60*1000); // Thêm 5 phút để tránh lỗi chọn ngay lúc hiện tại
+      const minDateString = minDate.toISOString().slice(0, 16);
+      
+      // Set max: 30 ngày sau
+      const maxDate = new Date(now.getTime() + 30*24*60*60*1000);
+      const maxDateString = maxDate.toISOString().slice(0, 16);
+      
+      datetimeInput.min = minDateString;
+      datetimeInput.max = maxDateString;
+    }
+    
+    // Gọi hàm set giới hạn
+    setDateTimeConstraints();
+    
+    // Kiểm tra khi người dùng chọn thời gian
+    datetimeInput.addEventListener('change', function() {
+      if (this.value) {
+        const selectedDate = new Date(this.value);
+        const selectedHour = selectedDate.getHours();
+        
+        // Kiểm tra giờ làm việc (8h-19h)
+        if (selectedHour < 8 || selectedHour >= 19) {
+          alert('Giờ làm việc từ 8:00 đến 19:00. Vui lòng chọn thời gian phù hợp.');
+          this.value = '';
+          return;
+        }
+        
+        // Kiểm tra không đặt trong quá khứ
+        const now = new Date();
+        if (selectedDate < now) {
+          alert('Không thể đặt lịch trong quá khứ. Vui lòng chọn thời gian phù hợp.');
+          this.value = '';
+          return;
+        }
+      }
+    });
+    
+    // Update giới hạn mỗi phút để đảm bảo không đặt trong quá khứ
+    setInterval(setDateTimeConstraints, 60000);
+  });
   let calendar = null;
 
   function fmtVND(n){ return (n||0).toLocaleString('vi-VN') + ' đ'; }
@@ -511,4 +560,3 @@ document.getElementById('bookingForm').addEventListener('click', function (e) {
 </script>
 </body>
 </html>
-```

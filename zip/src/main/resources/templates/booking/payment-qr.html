@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Thanh toán qua VietQR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <style>
+    body {background:#EAE7D6;}
+    .wrap {max-width:780px;margin:36px auto;background:#fff;border-radius:16px;box-shadow:0 2px 16px #5d7b6f22;padding:24px;}
+    .title {color:#5D7B6F;font-weight:800;font-size:1.6rem;margin-bottom:16px;}
+    .grid {display:grid;grid-template-columns: 1fr 1fr;gap:24px;}
+    @media(max-width:820px){ .grid{grid-template-columns:1fr;} }
+    .card {border:1px solid #eae7d6;border-radius:12px;padding:16px;}
+    .muted {color:#9aa6a0;}
+    .btn {display:inline-block;padding:10px 14px;border-radius:10px;background:#5D7B6F;color:#fff;text-decoration:none;font-weight:700;margin-right:8px}
+    .btn.secondary{background:#A4C3A2}
+    .kv {display:flex;justify-content:space-between;border-bottom:1px dashed #eee;padding:6px 0;}
+    .kv b{color:#5D7B6F}
+    .qr {text-align:center}
+    .qr img{max-width:100%;border-radius:12px;box-shadow:0 2px 12px #5d7b6f18}
+    .copy {cursor:pointer;border:1px dashed #B0D4B8;padding:6px 10px;border-radius:10px;color:#5D7B6F}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">Quét QR để thanh toán</div>
+  <div class="grid">
+    <div class="card qr">
+      <img th:src="${qrImg}" alt="VietQR">
+      <div class="muted" style="margin-top:8px;">Dùng app ngân hàng hoặc ví hỗ trợ VietQR để quét mã.</div>
+    </div>
+    <div class="card">
+      <div class="kv"><span>Ngân hàng</span><b th:text="${bank}">ACB</b></div>
+      <div class="kv"><span>Số tài khoản</span>
+        <span>
+          <b th:text="${account}">123456789</b>
+          <span class="copy" onclick="copyText(this.previousElementSibling.textContent)">Sao chép</span>
+        </span>
+      </div>
+      <div class="kv"><span>Số tiền</span><b th:text="${#numbers.formatInteger(amount,0)} + ' đ'">0 đ</b></div>
+      <div class="kv"><span>Nội dung</span>
+        <span>
+          <b th:text="${addInfo}">HH BOOKING #1</b>
+          <span class="copy" onclick="copyText(this.previousElementSibling.textContent)">Sao chép</span>
+        </span>
+      </div>
+
+      <div class="muted" style="margin:10px 0 14px">
+        Sau khi chuyển khoản thành công, hệ thống sẽ xác nhận trong giây lát (hoặc khi nhân viên đối soát).
+        Bạn có thể rời trang này bất cứ lúc nào.
+      </div>
+
+      <a th:href="@{|/booking/success?id=${booking.id}|}" class="btn">Tôi đã chuyển </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function copyText(t){
+    navigator.clipboard.writeText(t).then(()=>alert('Đã sao chép!'));
+  }
+</script>
+</body>
+</html>

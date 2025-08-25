@@ -5,3 +5,9 @@ momo.
 thông báo.
 stylist lỗi
 phản hồi report admin.
+lỗi trùng lịch của đặt lịch - client
+thanh trạng thái của đặt lịch trong profile phải là pending. 
+không được đặt thời gian quá khứ và không lố giờ hoạt động.
+làm thông báo. 
+làm form cập nhật profile.
+đặt lịch xong được thêm điểm. 

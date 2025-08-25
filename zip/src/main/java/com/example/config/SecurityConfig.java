@@ -1,6 +1,8 @@
+// src/main/java/com/example/config/SecurityConfig.java
 package com.example.config;
 
 import com.example.service.AppUserDetailsService;
+import com.example.config.RoleBasedAuthSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final AppUserDetailsService uds;
+    private final RoleBasedAuthSuccessHandler successHandler;
 
     @Bean
     BCryptPasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
@@ -29,10 +32,9 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            // CSRF bật mặc định
             .authorizeHttpRequests(reg -> reg
                 .requestMatchers("/", "/home", "/login", "/register",
-                                 "/css/**", "/js/**", "/images/**", "/assets/**").permitAll()
+                                 "/css/**", "/js/**", "/images/**", "/assets/**", "/uploads/**").permitAll()
                 .requestMatchers("/booking", "/booking/**").permitAll()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
@@ -40,9 +42,10 @@ public class SecurityConfig {
             .formLogin(f -> f
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .usernameParameter("username")   // cho phép nhập username hoặc email
+                .usernameParameter("username")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/", true)
+                .successHandler(successHandler)      // 🔴 dùng success handler theo role
+                // .defaultSuccessUrl("/", false)    // (tuỳ chọn) fallback nếu không dùng successHandler
                 .failureUrl("/login?error")
                 .permitAll()
             )

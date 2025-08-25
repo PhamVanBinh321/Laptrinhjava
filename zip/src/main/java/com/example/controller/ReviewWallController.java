@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ReviewWallController {
 
     private final ReviewWallService wallService;
-    private final UserRepository userRepository; // <-- thêm
+    private final UserRepository userRepository;
 
     @GetMapping
     public String index(@RequestParam(defaultValue = "0") int page,
@@ -44,16 +44,16 @@ public class ReviewWallController {
     public String post(@RequestParam Integer rating,
                        @RequestParam String comment,
                        @AuthenticationPrincipal UserDetails principal,
-                       RedirectAttributes ra) {
+                       RedirectAttributes redirectAttributes) {
         if (principal == null) {
-            ra.addFlashAttribute("error", "Vui lòng đăng nhập để gửi đánh giá.");
+            redirectAttributes.addAttribute("error", "Vui lòng đăng nhập để gửi đánh giá.");
             return "redirect:/login";
         }
         try {
             wallService.post(principal.getUsername(), rating, comment);
-            ra.addFlashAttribute("ok", "Cảm ơn bạn! Đánh giá đã được gửi.");
+            redirectAttributes.addAttribute("success", "Cảm ơn bạn! Đánh giá đã được gửi.");
         } catch (IllegalArgumentException ex) {
-            ra.addFlashAttribute("error", ex.getMessage());
+            redirectAttributes.addAttribute("error", ex.getMessage());
         }
         return "redirect:/reviews";
     }

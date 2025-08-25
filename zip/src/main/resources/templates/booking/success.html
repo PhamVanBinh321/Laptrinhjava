@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Đặt lịch thành công</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <style>
+    body{background:#EAE7D6}
+    .wrap{max-width:720px;margin:40px auto;background:#fff;border-radius:16px;box-shadow:0 2px 16px #5d7b6f22;padding:24px;text-align:center}
+    .big{font-size:1.6rem;color:#5D7B6F;font-weight:800}
+    .muted{color:#9aa6a0;margin:6px 0 12px}
+    .btn{display:inline-block;padding:10px 14px;border-radius:10px;background:#5D7B6F;color:#fff;text-decoration:none;font-weight:700;margin:6px}
+    .btn.secondary{background:#A4C3A2}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="big">Đặt lịch thành công!</div>
+  <div class="muted">
+    Mã đặt lịch: <b th:text="${booking.id}">#</b> —
+    Trạng thái: <b th:text="${booking.status}">PENDING</b>
+  </div>
+
+  <div th:if="${booking.paymentMethod.name() == 'ONLINE'}" class="muted">
+    Nếu bạn đã thanh toán qua VietQR, vui lòng chờ xác nhận.<br>
+    Chúng tôi sẽ cập nhật trạng thái đơn ngay khi đối soát.
+  </div>
+
+  <a th:href="@{/}" class="btn">Về trang chủ</a>
+</div>
+</body>
+</html>

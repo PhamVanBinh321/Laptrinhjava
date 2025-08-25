@@ -77,10 +77,10 @@
     <div th:each="fb : ${feedbackPage.content}" class="comment-main">
       <!-- FORM: avatar người dùng đăng nhập -->
 <img class="comment-avatar"
-     th:src="${currentUser != null and currentUser.avatar != null and !#strings.isEmpty(currentUser.avatar)}
-              ? @{/uploads/avatar/{img}(img=${currentUser.avatar})}
-              : @{/uploads/avatar/default.png}"
-     alt="avatar"/>
+         th:src="${fb.customer != null and fb.customer.avatar != null and !#strings.isEmpty(fb.customer.avatar)}
+                  ? @{/uploads/avatar/{img}(img=${fb.customer.avatar})}
+                  : @{/uploads/avatar/default.png}"
+         alt="avatar"/>
 
       <div class="comment-content flex-grow-1">
         <div class="comment-header">
@@ -116,6 +116,8 @@
 </div>
 
 <div th:replace="~{fragments/footer :: siteFooter}"></div>
+<!-- Thêm trước thẻ </body> -->
+<th:block th:replace="~{fragments/alert :: toast}"></th:block>
 
 <script>
   // Star rating FE cho form

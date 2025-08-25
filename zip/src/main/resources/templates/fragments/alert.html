@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Toast container -->
+    <div th:fragment="toast">
+        <div th:if="${param.success}" class="alert-success" th:text="${param.success[0]}" style="
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #4CAF50; 
+            color: white; 
+            padding: 16px 24px; 
+            border-radius: 4px; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        "></div>
+        
+        <div th:if="${param.error}" class="alert-error" th:text="${param.error[0]}" style="
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            background: #f44336; 
+            color: white; 
+            padding: 16px 24px; 
+            border-radius: 4px; 
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        "></div>
+        
+        <script>
+            // Tự động ẩn sau 3 giây
+            setTimeout(function() {
+                var alerts = document.querySelectorAll('.alert-success, .alert-error');
+                alerts.forEach(function(alert) {
+                    if (alert) {
+                        alert.style.transition = 'opacity 0.3s';
+                        alert.style.opacity = '0';
+                        setTimeout(function() {
+                            if (alert) alert.remove();
+                        }, 300);
+                    }
+                });
+            }, 3000);
+        </script>
+    </div>
+</body>
+</html>

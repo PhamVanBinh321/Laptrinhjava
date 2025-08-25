@@ -5,17 +5,251 @@
   <title th:text="${(stylist.user != null && !#strings.isEmpty(stylist.user.fullName) ? stylist.user.fullName : stylist.user.username) + ' - Hair Harmony'}">Stylist - Hair Harmony</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link th:href="@{/css/styles.css}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body{background:#EAE7D6}
-    .detail-hero{width:100vw;min-height:280px;background:linear-gradient(90deg,#D7F9FA 65%,#B0D4B8 100%);
-      display:flex;align-items:center;justify-content:center;padding:40px 0;margin-left:calc(-50vw + 50%);margin-right:calc(-50vw + 50%)}
-    .detail-hero-inner{display:flex;align-items:flex-end;max-width:1100px;width:100%;gap:28px;flex-wrap:wrap;padding:0 14px}
-    .detail-img{width:300px;max-width:44vw;border-radius:18px;object-fit:cover;box-shadow:0 4px 28px #5d7b6f28;border:6px solid #fff}
-    .detail-title{font-size:2.1rem;color:#5D7B6F;font-weight:800;margin:0 0 8px 0}
-    .detail-meta{color:#6e7f75}
-    .desc-wrap{background:#fff;max-width:1000px;margin:0 auto 26px auto;padding:22px;border-radius:16px;box-shadow:0 2px 16px #5d7b6f1a}
-    .btn{display:inline-block;background:#5D7B6F;color:#fff;padding:10px 20px;border-radius:12px;text-decoration:none;font-weight:600}
-    .btn:hover{background:#A4C3A2}
+    body {
+      background: #EAE7D6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    /* Hero Section */
+    .detail-hero {
+      width: 100vw;
+      min-height: 400px;
+      background: linear-gradient(135deg, #D7F9FA 0%, #A4C3A2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 0;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .detail-hero::before {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      background: rgba(176, 212, 184, 0.2);
+    }
+    
+    .detail-hero::after {
+      content: "";
+      position: absolute;
+      bottom: -80px;
+      left: -30px;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(164, 195, 162, 0.2);
+    }
+    
+    .detail-hero-inner {
+      display: flex;
+      align-items: center;
+      max-width: 1200px;
+      width: 100%;
+      gap: 50px;
+      flex-wrap: wrap;
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .detail-img-container {
+      flex: 1;
+      min-width: 250px;
+      text-align: center;
+    }
+    
+    .detail-img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 20px;
+      object-fit: cover;
+      box-shadow: 0 15px 35px rgba(93, 123, 111, 0.3);
+      border: 8px solid #fff;
+      transition: transform 0.3s ease;
+    }
+    
+    .detail-img:hover {
+      transform: scale(1.03);
+    }
+    
+    .detail-info {
+      flex: 1;
+      min-width: 300px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 35px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(93, 123, 111, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    
+    .detail-title {
+      font-size: 2.5rem;
+      color: #5D7B6F;
+      font-weight: 800;
+      margin: 0 0 20px 0;
+      line-height: 1.2;
+    }
+    
+    .detail-meta {
+      color: #5D7B6F;
+      margin-bottom: 25px;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      padding: 12px 15px;
+      background: #f8f8f8;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    
+    .meta-item:hover {
+      background: #eef5ee;
+      transform: translateX(5px);
+    }
+    
+    .meta-item i {
+      color: #5D7B6F;
+      font-size: 1.2rem;
+      margin-right: 15px;
+      width: 25px;
+    }
+    
+    .meta-item b {
+      min-width: 120px;
+      display: inline-block;
+    }
+    
+    .specialties {
+      color: #5D7B6F;
+      font-weight: 600;
+      background: #e8f5e9;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+    }
+    
+    .served-customers {
+      color: #5D7B6F;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+    
+    .desc-content {
+      font-size: 1.05rem;
+      color: #444;
+      line-height: 1.7;
+      white-space: pre-line;
+      background: #fafafa;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      margin-bottom: 25px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+    
+    .btn {
+      display: inline-block;
+      background: #5D7B6F;
+      color: #fff;
+      padding: 14px 35px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      box-shadow: 0 5px 15px rgba(93, 123, 111, 0.3);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: auto;
+      min-width: 250px;
+    }
+    
+    .btn:hover {
+      background: #4a6358;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(93, 123, 111, 0.4);
+    }
+    
+    /* Responsive */
+    @media (max-width: 992px) {
+      .detail-hero-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+      }
+      
+      .detail-info {
+        width: 100%;
+      }
+      
+      .detail-title {
+        font-size: 2.2rem;
+      }
+      
+      .meta-item {
+        justify-content: center;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .detail-hero {
+        min-height: auto;
+        padding: 40px 0;
+      }
+      
+      .detail-hero-inner {
+        padding: 0 15px;
+        gap: 25px;
+      }
+      
+      .detail-info {
+        padding: 25px 20px;
+      }
+      
+      .detail-title {
+        font-size: 1.9rem;
+      }
+      
+      .btn {
+        width: 100%;
+        min-width: auto;
+        padding: 12px 25px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .detail-title {
+        font-size: 1.7rem;
+      }
+      
+      .meta-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        text-align: left;
+      }
+      
+      .meta-item i {
+        margin-right: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -23,29 +257,45 @@
 
 <section class="detail-hero">
   <div class="detail-hero-inner">
-<img class="detail-img"
-  th:src="${stylist.user != null and stylist.user.avatar != null and !#strings.isEmpty(stylist.user.avatar)}
-           ? @{/uploads/avatar/{img}(img=${stylist.user.avatar})}
-           : @{/uploads/avatar/default.png}"
-  alt="Avatar stylist"/>
-    <div>
-      <div class="detail-title"
-           th:text="${stylist.user != null && !#strings.isEmpty(stylist.user.fullName) ? stylist.user.fullName : stylist.user.username}">Tên stylist</div>
-      <div class="detail-meta">
-        <div><b>Kinh nghiệm:</b> <span th:text="${stylist.experienceYears}">0</span> năm</div>
-        <div><b>Cấp bậc:</b> <span th:text="${stylist.level}">Level</span></div>
-        <div><b>Chuyên môn:</b> <span th:text="${stylist.specialties}">Chuyên môn</span></div>
-        <div><b>Khách đã phục vụ:</b> <span th:text="${stylist.servedCustomers}">0</span>+</div>
-      </div>
-      <a class="btn" th:href="@{/booking(stylist=${stylist.userId})}">Đặt lịch với stylist này</a>
+    <div class="detail-img-container">
+      <img class="detail-img"
+           th:src="${stylist.user != null and stylist.user.avatar != null and !#strings.isEmpty(stylist.user.avatar)}
+                    ? @{/uploads/avatar/{img}(img=${stylist.user.avatar})}
+                    : @{/uploads/avatar/default.png}"
+           th:alt="${stylist.user != null && !#strings.isEmpty(stylist.user.fullName) ? stylist.user.fullName : stylist.user.username}"/>
     </div>
-  </div>
-</section>
-
-<section style="padding:16px">
-  <div class="desc-wrap">
-    <h3 style="color:#5D7B6F;margin-top:0">Giới thiệu chi tiết</h3>
-    <div th:text="${stylist.bio}">Bio…</div>
+    <div class="detail-info">
+      <h1 class="detail-title"
+          th:text="${stylist.user != null && !#strings.isEmpty(stylist.user.fullName) ? stylist.user.fullName : stylist.user.username}">Tên stylist</h1>
+      <div class="detail-meta">
+        <div class="meta-item">
+          <i class="fas fa-briefcase"></i>
+          <b>Kinh nghiệm:</b> 
+          <span><span th:text="${stylist.experienceYears}">0</span> năm</span>
+        </div>
+        <div class="meta-item">
+          <i class="fas fa-award"></i>
+          <b>Cấp bậc:</b> 
+          <span th:text="${stylist.level}">Level</span>
+        </div>
+        <div class="meta-item">
+          <i class="fas fa-star"></i>
+          <b>Chuyên môn:</b> 
+          <span class="specialties" th:text="${stylist.specialties}">Chuyên môn</span>
+        </div>
+        <div class="meta-item">
+          <i class="fas fa-users"></i>
+          <b>Khách đã phục vụ:  </b> 
+          <span class="served-customers"><span th:text="${ stylist.servedCustomers}">0</span>+</span>
+        </div>
+      </div>
+      
+      <div class="desc-content" th:text="${stylist.bio}">Bio…</div>
+      
+      <a class="btn" th:href="@{/booking(stylist=${stylist.userId})}">
+        <i class="fas fa-calendar-check"></i> Đặt lịch ngay
+      </a>
+    </div>
   </div>
 </section>
 

@@ -34,7 +34,10 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
      @EntityGraph(attributePaths = {"customer"})                      
      Page<Feedback> findAllByOrderByCreatedAtDesc(Pageable pageable);
 
-    @Query("select coalesce(avg(f.rating),0), count(f) from Feedback f")
-    Object[] aggregateAll();
+     @Query("SELECT AVG(COALESCE(f.rating, 0)) FROM Feedback f WHERE f.rating IS NOT NULL")
+    Double findAverageRating();
+    
+    @Query("SELECT COUNT(f) FROM Feedback f WHERE f.rating IS NOT NULL")
+    Long countWithRating();
 
 }
